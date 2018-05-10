@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Inventory Update</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="container row center-both" style="width:100vw; height:100vh;">
+	<div>
+		<form class="login-form container padding-20 row" action="auth.html" method="get">
+			<select name="dept" class="card-input" style="margin-bottom:20px;">
+				<option>Select an item </option>
+				<option value="1">Item 1</option>
+				<option value="2">Item 2</option>
+				<option value="3">Item 3</option>
+			</select>
+			<input type="range" min="1" max="100" value="50" class="slider" id="slider" onchange="updateSlider(this)">
+			<span id="sliderOut"></span>
+
+			<div class="history-filter">
+				<span class="active">2018</span>
+				<span>2017</span>
+				<span>2016</span>
+			</div>
+			<div class="page-filter"><div class="active"></div> <div></div> <div></div></div>
+			<div class="toast"><div>This is a toast!</div></div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		
+		function updateSlider(obj){
+			var v = obj.value;
+			var out = document.getElementById("sliderOut");
+			out.innerHTML = v;
+			console.log(v);
+		}
+	</script>
+</body>
+</html>

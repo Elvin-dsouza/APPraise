@@ -1,0 +1,249 @@
+/*
+	Minimal Flex 
+	a minimal template for layouts using the flexbox property implemented in the HTML5 Spec
+	by Elvin Shawn Dsouza 
+	[30 Nov 2016]
+*/
+
+
+.container{
+	display:flex;
+	flex:1;
+}
+
+.table-container{
+	overflow: scroll;
+}
+
+.col{
+	flex-flow:row nowrap;
+}
+
+.row{
+	flex-flow:column nowrap;
+}
+
+.wrap{
+	flex-wrap: wrap;
+}
+.center-both{
+	justify-content: center;
+	align-items: center;
+}
+
+.center-vert{
+	align-items: center;
+}
+
+.center-horz{
+	justify-content: center;
+}
+
+.c1{
+	flex:1;
+}
+
+.c2{
+	flex:2;
+}
+
+.c3{
+	flex:3;
+}
+
+.c4{
+	flex:4;
+}
+
+.c5{
+	flex:5;
+}
+.c6{
+	flex:6;
+}
+
+.c7{
+	flex:7;
+}
+
+.c8{
+	flex:8;
+}
+
+.c9{
+	flex:9;
+}
+
+.padding-20{
+	padding:20px;
+}
+
+
+body{
+	background:#ECEFF1;
+	margin:0;
+}
+/*-------------------------------------------------------------------------------------*/
+/*UI Elements*/
+/*-------------------------------------------------------------------------------------*/
+
+.card-input{
+	border:0px;
+	font-size:4em;
+	padding:20px;
+	border-radius: 2px;
+	font-weight:200;
+	font-color:#333;
+	background:white;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	-moz-appearance: none;
+}
+
+.card{
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  background:white;
+}
+
+input[type="submit"]{
+	background:#3F51B5;
+	cursor: pointer;
+	padding:10px 40px;
+	font-size:1.2em;
+	border-radius:3px;
+	 box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	color:white;
+	border:0px;
+
+	-moz-appearance: none;
+}
+
+input[type="text"], input[type="password"], input[type="email"]
+{
+	margin-top:10px;
+	font-size:2em;
+	border-radius: 3px;
+	border:0;
+	 box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	padding:10px;
+
+}
+
+.login-form input[type="submit"]
+{
+	margin-top:20px;
+	padding-left:10px;
+	padding-right:10px;
+	align-self: center;
+	font-size:1.5em;
+}
+
+.login-form > img{
+	width:100px;
+	height:100px;
+	align-self: center;
+	margin-bottom:20px;
+	background:#333;
+	padding:15px;
+	border-radius:50%;
+}
+
+.slider {
+    -webkit-appearance: none;  
+    appearance: none;
+    width: 100%;
+    margin:0px;
+    padding:0px;
+    outline: none;
+    /*height: 25px; */
+    background:transparent;
+    /*background: #d3d3d3; */
+    outline: none; 
+    /*opacity: 0.7; */
+}
+
+#sliderOut{
+	font-size:1.2em;
+	color:grey;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border:0;
+    background: #3F51B5; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border:0;
+    background: #3F51B5; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+
+.history-filter{
+	display:flex;
+	font-size:1.2em;
+	font-weight:300;
+	align-items: center;
+	cursor:pointer;
+}
+
+
+.history-filter > span{
+		color:grey;
+		padding:0px 5px;
+}
+
+.page-filter{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.page-filter > div{
+	width:10px;
+	height:10px;
+	border-radius:50%;
+	background:grey;
+	margin:0px 2px;
+	cursor: pointer;
+}
+
+.page-filter > div.active{
+	width:15px;
+	height:15px;
+	background:#3F51B5;
+}
+
+.history-filter > span.active{
+	color:#3F51B5;
+	font-size:1.3em;
+}
+
+.toast{
+ position: fixed;
+ display: flex;
+ width:100vw;
+ justify-content: center;
+ position: fixed;
+ bottom: 20px;
+ left:0;
+}
+
+.toast > div{
+	background-color:#333;
+ 	color:grey;
+ 	font-size:1em;
+ 	padding:10px;
+ 	border-radius:50px;
+}
+
