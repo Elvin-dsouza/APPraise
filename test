@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
+	<script>
+	  // Initialize Firebase
+	
+	  var config = {
+	    apiKey: "AIzaSyBIuGZSdjW-jRuotqsjOrb5CTcJV8W5_Mo",
+	    authDomain: "appraisal-8ca4d.firebaseapp.com",
+	    databaseURL: "https://appraisal-8ca4d.firebaseio.com",
+	    projectId: "appraisal-8ca4d",
+	    storageBucket: "appraisal-8ca4d.appspot.com",
+	    messagingSenderId: "502189285093"
+	  };
+	  firebase.initializeApp(config);
+	  var db = firebase.firestore();
+
+	  db.collection("staff").add({
+		    first: "Ada",
+		    last: "Lovelace",
+		    born: 1815
+		})
+		.then(function(docRef) {
+		    console.log("Document written with ID: ", docRef.id);
+		})
+		.catch(function(error) {
+		    console.error("Error adding document: ", error);
+		});
+	 </script>
+
+</body>
+</html>

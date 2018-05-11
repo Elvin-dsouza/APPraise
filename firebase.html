@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<input type="email" name="email" id="email">
+<input type="password" name="password" id="pass">
+<button onclick ="create_user()">Send</button>
+<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBIuGZSdjW-jRuotqsjOrb5CTcJV8W5_Mo",
+    authDomain: "appraisal-8ca4d.firebaseapp.com",
+    databaseURL: "https://appraisal-8ca4d.firebaseio.com",
+    projectId: "appraisal-8ca4d",
+    storageBucket: "appraisal-8ca4d.appspot.com",
+    messagingSenderId: "502189285093"
+  };
+  firebase.initializeApp(config);
+
+  function create_user(){
+  	  var e = document.getElementById("email").value;
+ 	 var pass = document.getElementById("pass").value;
+  	 firebase.auth().createUserWithEmailAndPassword(e, pass).catch(function(error) {
+  		  // Handle Errors here.
+		  var errorCode = error.code;
+		  var errorMessage = error.message;
+		  if (errorCode == 'auth/weak-password') {
+		    alert('The password is too weak.');
+		  } 
+		  else {
+		    alert(errorMessage);
+		  }
+		  console.log(error);
+	});
+  }
+
+  firebase.auth().onAuthStateChanged(function(firebaseUser){
+  	if(firebaseUser){
+  		alert(firebaseUser);
+
+  	}
+  	else
+  	{
+  		alert("Not logged in");
+  	}
+
+  });
+ 
+
+</script>
+
+</body>
+</html>
