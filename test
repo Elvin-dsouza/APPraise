@@ -4,12 +4,20 @@
 	<title></title>
 </head>
 <body>
+	<div>
+		<div class="login-form container padding-20 row">
+			
+			<input type="submit" value="Logout &#x21DD;" style="margin-left:10px;" onclick="logout()">
+		</div>
+		<div id="display">
+			
+		</div>
+	</div>
 	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
 	<script>
 	  // Initialize Firebase
-	
 	  var config = {
 	    apiKey: "AIzaSyBIuGZSdjW-jRuotqsjOrb5CTcJV8W5_Mo",
 	    authDomain: "appraisal-8ca4d.firebaseapp.com",
@@ -20,18 +28,33 @@
 	  };
 	  firebase.initializeApp(config);
 	  var db = firebase.firestore();
+	  // var x = db.addCollection("Computer Applications");
+	  var staff = db.collection("staff");
+	  staff.where("id","==","MAHE1709800008").get().then(function(querySnapshot) {
+		    querySnapshot.forEach(function(doc) {
+		    	document.getElementById("display").innerHTML+=doc.id+" "+JSON.stringify(doc.data())+"<br/>";
+		        // console.log(doc.id, " => ", doc.data());
+		    });
+	   });
 
-	  db.collection("staff").add({
-		    first: "Ada",
-		    last: "Lovelace",
-		    born: 1815
-		})
-		.then(function(docRef) {
-		    console.log("Document written with ID: ", docRef.id);
-		})
-		.catch(function(error) {
-		    console.error("Error adding document: ", error);
-		});
+		// firebase.auth().onAuthStateChanged(function(firebaseUser){
+		//   	if(firebaseUser){
+		//   	}
+		//   	else
+		//   	{
+		//   		alert("Not logged in, please login to continue")
+		//   		window.location = "login";
+		//   	}
+		//   });
+		function logout(){
+			firebase.auth().signOut().then(function() {
+			  alert("logged out");
+			  window.location="login";
+			}).catch(function(error) {
+			  alert("couldnt log out");
+			 
+			});
+			}
 	 </script>
 
 </body>
