@@ -19,7 +19,7 @@
 			<h1>AppRaise</h1>
 		</div>
 		<!-- <div class="profile-info">
-			
+
 		</div> -->
 		<div class="button-bar c1">
 			<svg class="icon c1"><use xlink:href="#icon-exit_to_app"></use></svg>
@@ -32,7 +32,7 @@
 				<div class="c1">
 					<h2>A++</h2>
 					<h5>Last Updated on 30th Feb</h5>
-					<h1> Dr. Gautam Narula </h1>
+					<h1> Dr. Elvin Dsouza </h1>
 					<h1>Associate Professor</h1>
 					<p> Department of Computer Applications</p>
 					<h3>MAHE00001</h3>
@@ -53,14 +53,14 @@
 		</div>
 	</main>
 	<footer>
-		
+
 	</footer>
 <!-- 	<div>
 		<div class="login-form container padding-20 row">
 			<input type="submit" value="Logout &#x21DD;" style="margin-left:10px;" onclick="logout()">
 		</div>
 		<div id="display">
-			
+
 		</div> -->
 	<!-- </div> -->
 	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
@@ -104,7 +104,7 @@ ializeApp(config);
 			  window.location="login";
 			}).catch(function(error) {
 			  alert("couldnt log out");
-			 
+
 			});
 			}
 	 </script>
