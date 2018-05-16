@@ -2,17 +2,67 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/modernflex.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-	<div>
-		<div class="login-form container padding-20 row">
+	<svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      	<defs>
+			<symbol id="icon-exit_to_app" viewBox="0 0 24 24">
+				<title>exit_to_app</title>
+				<path d="M18.984 21c1.078 0 2.016-0.938 2.016-2.016v-13.969c0-1.078-0.938-2.016-2.016-2.016h-13.969c-1.125 0-2.016 0.938-2.016 2.016v3.984h2.016v-3.984h13.969v13.969h-13.969v-3.984h-2.016v3.984c0 1.078 0.891 2.016 2.016 2.016h13.969zM10.078 8.391l2.578 2.625h-9.656v1.969h9.656l-2.578 2.625 1.406 1.406 5.016-5.016-5.016-5.016z"></path>
+			</symbol>
+		</defs>
+	</svg>
+	<header class="title-bar-huge container ">
+		<div class="main-heading c9">
+			<h1>AppRaise</h1>
+		</div>
+		<!-- <div class="profile-info">
 			
+		</div> -->
+		<div class="button-bar c1">
+			<svg class="icon c1"><use xlink:href="#icon-exit_to_app"></use></svg>
+		</div>
+	</header>
+	<main class="container col" style="margin:0 auto; width:90vw; margin-top:-100px; ">
+		<div class="c6 card profile-card container row" style="margin:5px;">
+			<section class="container col">
+				<img src="gn.png" class="c1">
+				<div class="c1">
+					<h2>A++</h2>
+					<h5>Last Updated on 30th Feb</h5>
+					<h1> Dr. Gautam Narula </h1>
+					<h1>Associate Professor</h1>
+					<p> Department of Computer Applications</p>
+					<h3>MAHE00001</h3>
+
+				</div>
+			</section>
+			<footer class="container col center-vert" style="justify-content: flex-end;">
+				<div style="padding:10px;">View</div>
+			</footer>
+		</div>
+		<div class="c4" style="margin:5px;">
+			<div class="history-filter-vert col">
+				<span class='active'>2018</span>
+				<span>2017</span>
+				<span>2016</span>
+				<span>2015</span>
+			</div>
+		</div>
+	</main>
+	<footer>
+		
+	</footer>
+<!-- 	<div>
+		<div class="login-form container padding-20 row">
 			<input type="submit" value="Logout &#x21DD;" style="margin-left:10px;" onclick="logout()">
 		</div>
 		<div id="display">
 			
-		</div>
-	</div>
+		</div> -->
+	<!-- </div> -->
 	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
@@ -26,7 +76,9 @@
 	    storageBucket: "appraisal-8ca4d.appspot.com",
 	    messagingSenderId: "502189285093"
 	  };
-	  firebase.initializeApp(config);
+	  firebase.init
+
+ializeApp(config);
 	  var db = firebase.firestore();
 	  // var x = db.addCollection("Computer Applications");
 	  var staff = db.collection("staff");
