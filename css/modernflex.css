@@ -1,7 +1,7 @@
 /*
-	Minimal Flex 
+	Minimal Flex
 	a minimal template for layouts using the flexbox property implemented in the HTML5 Spec
-	by Elvin Shawn Dsouza 
+	by Elvin Shawn Dsouza
 	[30 Nov 2016]
 */
 
@@ -163,7 +163,7 @@ input[type="text"], input[type="password"], input[type="email"]
 }
 
 .slider {
-    -webkit-appearance: none;  
+    -webkit-appearance: none;
     appearance: none;
     width: 100%;
     margin:0px;
@@ -172,7 +172,7 @@ input[type="text"], input[type="password"], input[type="email"]
     /*height: 25px; */
     background:transparent;
     /*background: #d3d3d3; */
-    outline: none; 
+    outline: none;
     /*opacity: 0.7; */
 }
 
@@ -395,7 +395,7 @@ header .icon{
 	fill:white;
 	width:40px;
 	height:40px;
-	padding:10px;
+	padding:20px;
 }
 
 .history-filter-vert{
@@ -418,4 +418,56 @@ header .icon{
 	color:orange;
 	font-size:1.3em;
 	margin-bottom:10px;
+}
+
+/*PMS form styles*/
+h1.inline-head{
+	display:inline;
+}
+
+.title-bar-huge > div > span
+{
+	font-weight:100;
+	font-size: 1.5em;
+}
+
+.title-bar-huge  h2{
+	font-weight:400;
+	font-size:2em;
+	margin-top:5vw;
+}
+.padding-left-10
+{
+	padding-left:10px;
+}
+.button-bar
+{
+	text-align: right;
+}
+.margin-10
+{
+	margin-top:2vw;
+	margin-bottom:2vw;
+}
+
+.history-filter-vert-side{
+	display:flex;
+	flex-flow: column;
+	font-size:2em;
+	font-weight:300;
+	align-items:flex-end;
+	cursor:pointer;
+	margin-top:45px;
+}
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+.slider:hover {
+    opacity: 1;
 }
