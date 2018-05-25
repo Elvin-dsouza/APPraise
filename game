@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Game</title>
+</head>
+<body style="display: flex; justify-content: center; align-items: center; width:100vw; height:100vh; margin:0;">
+	<canvas width="800" height="500" style="background:grey;">
+		
+	</canvas>
+	<script type="text/javascript">
+		var floor;
+		function draw(){
+
+		}
+
+		function drawCube(ctx){
+
+		}
+
+		function drawFloor(ctx){
+			
+		}
+		drawFloor(document.getElementById("canvas").getContext("2d"));
+	</script>
+</body>
+</html>

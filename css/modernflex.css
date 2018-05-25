@@ -38,7 +38,9 @@
 .center-horz{
 	justify-content: center;
 }
-
+.c0{
+	flex:1;
+}
 .c1{
 	flex:1;
 }
@@ -423,9 +425,10 @@ header .icon{
 /*PMS form styles*/
 h1.inline-head{
 	display:inline;
+	margin:0;
 }
 
-.title-bar-huge > div > span
+span.profile-name
 {
 	font-weight:100;
 	font-size: 1.5em;
