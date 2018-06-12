@@ -97,10 +97,11 @@ body{
 	padding:20px;
 	border-radius: 2px;
 	font-weight:200;
-	font-color:#333;
+	color:#333;
 	background:white;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	-moz-appearance: none;
+	appearance: none;
 }
 
 .card{
@@ -121,6 +122,7 @@ input[type="submit"]{
 	border:0px;
 
 	-moz-appearance: none;
+	appearance: none;
 }
 
 input[type="text"], input[type="password"], input[type="email"]
@@ -277,6 +279,7 @@ input[type="text"], input[type="password"], input[type="email"]
 	color:white;
 	border:0px;
 	-moz-appearance: none;
+	appearance: none;
 	margin-top:20px;
 	padding-left:20px;
 	padding-right:20px;
@@ -297,6 +300,7 @@ input[type="text"], input[type="password"], input[type="email"]
 	/*color:white;*/
 	border:0px;
 	-moz-appearance: none;
+	appearance: none;
 	margin-top:20px;
 	padding-left:20px;
 	padding-right:20px;
@@ -311,6 +315,7 @@ input[type="text"], input[type="password"], input[type="email"]
 	font-weight:300;
 	background:#3F51B5;
 	padding:10px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .title-bar-stick{
@@ -321,6 +326,7 @@ input[type="text"], input[type="password"], input[type="email"]
 	position: sticky;
 	top:0;
 	width:100vw;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .title-bar .main-heading > h1{
 	font-weight:300;
@@ -398,6 +404,7 @@ header .icon{
 	width:40px;
 	height:40px;
 	padding:20px;
+	cursor: pointer;
 }
 
 .history-filter-vert{
@@ -412,14 +419,63 @@ header .icon{
 
 
 .history-filter > span{
-		color:grey;
-		padding:0px 5px;
+	color:grey;
+	padding:0px 5px;
 }
 
 .history-filter-vert > span.active{
 	color:orange;
 	font-size:1.3em;
 	margin-bottom:10px;
+}
+
+/* tab naviagation */
+.tab-container{
+	display: flex;
+	justify-content: flex-end;
+	align-items:center;
+
+}
+
+
+.tab{
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	background:white;
+	margin:10px;
+	color:#3F51B5;
+	border-radius: 50px;
+	padding:10px 20px;
+	cursor: pointer;
+}
+
+.active-tab{
+	color:#3F51B5;
+	font-weight:500;
+
+}
+
+/* List Box */
+
+.list-view{
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	background:white;
+	width:50vw;height:70vh;
+	border-radius:10px;
+	margin:20px;
+}
+
+.list-view-plain{
+	/* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
+	/* background:white; */
+	/* width:50vw;
+	/* border-radius:10px; */
+	height:80vh;
+	overflow-y: scroll;
+	margin:20px;
+}
+
+.list-item{
+	/* height:1000px; */
 }
 
 /*PMS form styles*/
@@ -452,6 +508,21 @@ span.profile-name
 	margin-top:2vw;
 	margin-bottom:2vw;
 }
+.appraisal-criteria{
+	color:#333;
+	margin-right:10px;
+	padding:30px 10px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	background:white;
+	/* border-radius:10px; */
+	/* margin-bottom:10px; */
+}
+
+.appraisal-criteria > header > h2{
+	color:#333;
+	font-weight: 400;
+	padding-left:10px;
+}
 
 .history-filter-vert-side{
 	display:flex;
@@ -463,7 +534,8 @@ span.profile-name
 	margin-top:45px;
 }
 .slider {
-    -webkit-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
     width: 100%;
     height: 25px;
     outline: none;
