@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Appraisal Form</title>
+</head>
+<body>
+	<main>
+		<div class="appraisal-container">
+			<header>
+				<h1 id="form-header"></h1>
+				<p id="form-max-points"></p>
+			</header>
+			<div id="appraisal-elements">
+		
+			</div>
+			<footer>
+				
+			</footer>
+		</div>
+
+	</main>
+
+	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
+	<!-- Add additional services you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
+	<!--<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-database.js"></script> -->
+	<!-- <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-messaging.js"></script> -->
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyBIuGZSdjW-jRuotqsjOrb5CTcJV8W5_Mo",
+	    authDomain: "appraisal-8ca4d.firebaseapp.com",
+	    databaseURL: "https://appraisal-8ca4d.firebaseio.com",
+	    projectId: "appraisal-8ca4d",
+	    storageBucket: "appraisal-8ca4d.appspot.com",
+	    messagingSenderId: "502189285093"
+	  };
+
+	  firebase.initializeApp(config);
+	  var db = firebase.firestore();
+	  var formA = db.collection("form").doc("A");
+	  var formAFields = formA.collection("fields");
+	  var heading;
+	
+	  formA.get().then(function(doc){
+	  	  if (doc.exists) {
+        		console.log("Document data:", doc.data());
+        		var header = document.getElementById("form-header");
+        		var max_points = document.getElementById("form-max-points");
+        		heading = doc.data().desc;
+        		header.innerHTML = heading;
+        		max_points.innerHTML = "Max Points: "+doc.data().maxPoints;
+        		formAFields.orderBy("order").get().then((querySnapshot)=>{
+        			querySnapshot.forEach((doc)=>{
+        				var container = document.createElement("div");
+        				container.className="appraisal-criteria";
+        				var criteriaHeader = document.createElement("header");
+        				var criteriaHeading = document.createElement("h2");
+        				criteriaHeading.innerHTML = doc.data().heading;
+        				criteriaHeader.append(criteriaHeading);
+        				var criteriaDescription = document.createElement("p");
+        				if(doc.data().desc !== undefined)
+        				criteriaDescription.innerHTML = doc.data().desc;
+        				criteriaHeader.append(criteriaDescription);
+        				container.append(criteriaHeader);
+        				document.getElementById("appraisal-elements").append(container);
+        			});
+        		}).catch((error)=>{
+        			console.log(error);
+        		});
+		    } else {
+		      
+		    }
+
+	  });
+	</script>
+</body>
+</html>
