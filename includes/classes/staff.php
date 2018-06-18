@@ -4,7 +4,7 @@
      * By Elvin Shawn DSouza
      * Created Monday 18th Jun 2018 12:26 PM
      */
-    require_once 'db.php';
+    include 'db.php';
 
    
 
@@ -41,8 +41,7 @@
                 'qualification' => 'na',
                 'designation' => '1-1-1970',
                 'age' => 0,
-                'pfno' => 000,
-                `superior_id` => 'MAHE00000');
+                'pfno' => 000, 'superior_id' => 'MAHE00000');
             else
             {
                 // Retrieve data from the employee id
@@ -52,16 +51,42 @@
                     
                     $this->data = $result->fetch_assoc();
                 }
+                else{
+                    echo "Cannot Retrieve";
+                }
             }
         }
 
         function add($dataArray){
                 $this->data = $dataArray;
-                $this->statementInsert->execute();
+                print_r($this->data);
+                 $this->statementInsert->bind_param("ssissssiis", $this->data['e_id'], $this->data['name'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'],$this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id']);
+                $r = $this->statementInsert->execute();
+                if($r)
+                {
+                    return 1;
+                }
+                else 
+                {
+                    echo "Execute failed: (" . $this->statementInsert->errno . ") " . $this->statementInsert->error;
+                    print_r($r);
+                    return 0;
+                }
         }
 
         function update(){
-            $this->statementUpdate->execute();
+             $this->statementUpdate->bind_param("ssissssiiss", $this->data['e_id'],$this->data['name'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'], $this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id'], $this->data['e_id']);      
+            $r = $this->statementUpdate->execute();
+                if($r)
+                {
+                    return 1;
+                }
+                else 
+                {
+                    echo "Execute failed: (" . $this->statementInsert->errno . ") " . $this->statementInsert->error;
+                    print_r($r);
+                    return 0;
+                }
         }
         
         // One Function To prepare them all
@@ -69,37 +94,31 @@
             // create Prepared Statements
             $this->statementUpdate = $this->connection->prepare("UPDATE staff SET
                                         `e_id` = ?,
+                                        `name` = ?,
                                         `dept_id` = ?,
                                         `dob` = ?,
                                         `doj` = ?,
                                         `qualification` = ?,
                                         `designation` = ?,
                                         `age` = ?,
-                                        `pfno` = ?,
-                                        `superior_id` = ? WHERE e_id = ?");
+                                        `pfno` = ?, `superior_id` = ? WHERE e_id = ?");
             
             $this->statementInsert = $this->connection->prepare("INSERT INTO staff (
                 `e_id`, `name`, 
-                `dept_id`, `doj`, 
+                `dept_id`, `dob`, `doj`, 
                 `qualification`, `designation`, 
-                `age`,`pfno`,`superior_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                `age`,`pfno`, `superior_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
             // one function to find them 
             $this->statementRetrieve = $this->connection->prepare("SELECT * FROM staff 
                 WHERE e_id = ?");
             
            
             // In the Darkness Bind them
-            $this->statementUpdate->bind_param("sissssiiss", $this->data['e_id'], $this->data['dept_id'], 
-            $this->data['dob'], $this->data['doj'], $this->data['qualification'],
-            $this->data['designation'], $this->data['age'], $this->data['pfno'], 
-            $this->data['superior_id'], $this->data['e_id']);      
+            $this->statementUpdate->bind_param("ssissssiiss", $this->data['e_id'],$this->data['name'],$this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'], $this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id'], $this->data['e_id']);      
 
             $this->statementRetrieve->bind_param("s",$this->data['e_id']);
 
-            $this->statementInsert->bind_param("sissssiis", $this->data['e_id'], $this->data['dept_id'], 
-            $this->data['dob'], $this->data['doj'], $this->data['qualification'],
-            $this->data['designation'], $this->data['age'], $this->data['pfno'], 
-            $this->data['superior_id']);
+            // $this->statementInsert->bind_param("sissssiis", $this->data['e_id'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'],$this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id']);
         }
 
         function __destruct(){

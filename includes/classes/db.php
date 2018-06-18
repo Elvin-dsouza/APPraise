@@ -8,16 +8,38 @@
       
        
 
-        const table_criteria = "";
+        const table_eval = "CREATE TABLE IF NOT EXISTS eval(
+            eval_level INT(3) PRIMARY KEY AUTO_INCREMENT,
+            designation VARCHAR(50)
+            )";
+
+        const table_critera = "CREATE TABLE IF NOT EXISTS criteria(
+            c_id INT(3) PRIMARY KEY AUTO_INCREMENT,
+            heading VARCHAR(256),
+            description VARCHAR(256),
+            part INT(3) NOT NULL,
+            eval_level INT(3) NOT NULL,
+            isSubCriteria TINYINT NOT NULL,
+            parent_id INT(3),
+            numChildren INT(3) DEFAULT 0,
+            FOREIGN KEY(parent_id) REFERENCES criteria(c_id) ON DELETE CASCADE,
+            FOREIGN KEY(`eval_level`) REFERENCES eval(`eval_level`)
+            )";
+
+        const table_forms = "CREATE TABLE IF NOT EXISTS form (
+            f_id INT(3) PRIMARY KEY AUTO_INCREMENT,
+            e_id VARCHAR(15),
+            createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+            FOREIGN KEY (e_id) REFERENCES staff(e_id) ON DELETE CASCADE)";
 
         private $table_users = "CREATE TABLE `user`(
             `u_id` INT(3) PRIMARY KEY AUTO_INCREMENT,
             `e_id` VARCHAR(15),
             `email` VARCHAR(128),
             `password` VARCHAR(512),
-            `updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(), FOREIGN KEY(`e_id`) REFERENCES `staff`(`e_id`))";
+            `updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(), FOREIGN KEY(`e_id`) REFERENCES `staff`(`e_id`) ON DELETE CASCADE)";
 
-        private $table_department = "CREATE TABLE IF NOT EXISTS `department` (`dept_id` INT(3) PRIMARY KEY AUTO_INCREMENT,
+        private $table_departments = "CREATE TABLE IF NOT EXISTS `department` (`dept_id` INT(3) PRIMARY KEY AUTO_INCREMENT,
             `dept_name` VARCHAR(128)
             )";
 
@@ -53,13 +75,13 @@
         }
 
         function createTables(){
-            $this->con->query($this->table_department);
+            $this->con->query($this->table_departments);
             $this->con->query($this->table_staff);
             $this->con->query($this->table_users);  
         }
 
         function __destruct(){
-            $this->con->close();
+            // $this->con->close();
         }
     }
     
