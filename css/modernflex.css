@@ -510,16 +510,48 @@ span.profile-name
 	margin-top:2vw;
 	margin-bottom:2vw;
 }
+
 .appraisal-criteria{
 	color:#333;
 	margin-right:10px;
+	margin-top:5px;
 	padding:30px 10px;
+	display: flex;
+	/* justify-content: center; */
+	align-items: center;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	background:white;
 	/* border-radius:10px; */
 	/* margin-bottom:10px; */
 }
 
+.appraisal-criteria > header{
+	flex:8;
+}
+
+
+.appraisal-criteria input[type='number']{
+	background:white;
+	appearance: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	border:0;
+	padding:10px;
+	color:#333;
+	background:#cccc;
+}
+
+.appraisal-heading{
+	display: flex;
+	align-items:center;
+	padding:10px;
+	max-width:80vw;
+
+}
+
+.appraisal-heading > h1{
+	flex:7;
+	font-weight:400;
+}
 .appraisal-criteria > header > h2{
 	color:#333;
 	font-weight: 400;
