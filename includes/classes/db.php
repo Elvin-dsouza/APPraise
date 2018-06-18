@@ -1,4 +1,10 @@
 <?php
+     /**
+     * @package Database Connection Package
+     * @author Elvin Shawn DSouza
+     * @version 0.1 | Created Monday 18th Jun 2018 12:26 PM
+     */
+
     class MyConnection
     {
         private $hostname = "localhost";

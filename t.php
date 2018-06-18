@@ -5,19 +5,22 @@
 
     include 'includes/classes/staff.php';
     require_once 'includes/classes/db.php';
-    // $d = array('e_id' => 'MAHE1872312',
-    //             'dept_id' => 1,
-    //             'dob' => '1-1-1970',
-    //             'doj' => '1-1-1970',
-    //             'qualification' => 'na',
-    //             'designation' => '1-1-1970',
-    //             'age' => 0,
-    //             'pfno' => 000,
-    //             `superior_id` => 'MAHE1872312');
+   
 
     
-    $staff = new Staff('MAHE00009');
-
+    $staff = new Staff('MAHE721731');
+    echo  $staff->data['e_id']." ".$staff->data['name']. " ".$staff->data['pfno'];
+    $staff->data['pfno']=1121;
+    print_r($staff->data);
+    echo $staff->update();
+    echo  $staff->data['e_id']." ".$staff->data['name']. " ".$staff->data['pfno'];
+    echo '<br/>';
+    print_r($staff->data);
+    echo '<br/>';
+    $staff2 = new Staff('-1');
+    $d = array('e_id' => 'MAHE721731','name' => "test",'dept_id' => 1,'dob' => '1970-1-1','doj' => '1970-1-1','qualification' => 'na','designation' => 'na','age' => 18,'pfno' => '000', 'superior_id' => 'MAHE00009');
+    $staff2->add($d);
+    print_r($staff2->data);
     // $staff->add($d);
 
 ?>
