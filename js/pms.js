@@ -15,6 +15,11 @@ function inflateCriteria(parent, heading, description, max_points) {
 	   let criteriaHeader = document.createElement("header"); // container for the heading
 	   let criteriaHeading = document.createElement("h2"); // the actual heading for the criteria
 	   let criteriaDescription = document.createElement("p"); // the description for the criteria
+	   let criteriaInput = document.createElement("input");
+	   criteriaInput.setAttribute('type', 'number');
+	   criteriaInput.setAttribute('max',max_points);
+	   criteriaInput.setAttribute('min',0);
+	   criteriaInput.setAttribute('placeholder',"[0 - "+ max_points+"]");
 	   criteriaHeading.innerHTML = heading;
 		if (description !== undefined)
 			criteriaDescription.innerHTML = description;
@@ -22,11 +27,15 @@ function inflateCriteria(parent, heading, description, max_points) {
 		container.append(criteriaHeader);
 		criteriaHeader.append(criteriaHeading);
 		criteriaHeader.append(criteriaDescription);
+		container.append(criteriaInput);
 		// append the container div to the parent element
 		parent.append(container);
-
 }
 
+function saveField(){
+	alert("called");
+	// TODO: save the field value
+}
 
 
 
