@@ -19,7 +19,7 @@
         /** Constructor
          *  @param e_id employee id, -1 for a default container
          */
-        function __construct($e_id){
+        function __construct($e_id = "-1"){
             // attempt a database connection
             try{
                 $db = new MyConnection();
@@ -68,6 +68,16 @@
                 else 
                     return $this->statementInsert->errno;
         }
+
+        function exists(){
+            $qry = "SELECT * FROM staff WHERE e_id = '{$this->e_id}'";
+            $result = $connection->query($qry);
+            if ($result && $result->num_rows == 1)
+                return true;
+            else
+                return false;
+        }
+
         /** Update Function
          * 
          */
@@ -102,8 +112,6 @@
             // one function to find them 
             $this->statementRetrieve = $this->connection->prepare("SELECT * FROM staff 
                 WHERE e_id = ?");
-            
-           
             // In the Darkness Bind them
             $this->statementUpdate->bind_param("ssissssiiss", $this->data['e_id'],$this->data['name'],$this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'], $this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id'], $this->data['e_id']);      
 

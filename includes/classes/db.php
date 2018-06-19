@@ -10,16 +10,16 @@
         private $hostname = "localhost";
         private $user_name = "appraise";
         private $password = "Dt4iaywxa04H3oNC";
-        private $database_name = "Appraise";
+        private $database_name = "Appnotraise";
       
        
 
-        const table_eval = "CREATE TABLE IF NOT EXISTS eval(
+       private $table_eval = "CREATE TABLE IF NOT EXISTS eval(
             eval_level INT(3) PRIMARY KEY AUTO_INCREMENT,
             designation VARCHAR(50)
             )";
 
-        const table_critera = "CREATE TABLE IF NOT EXISTS criteria(
+       private $table_critera = "CREATE TABLE IF NOT EXISTS criteria(
             c_id INT(3) PRIMARY KEY AUTO_INCREMENT,
             heading VARCHAR(256),
             description VARCHAR(256),
@@ -32,7 +32,7 @@
             FOREIGN KEY(`eval_level`) REFERENCES eval(`eval_level`)
             )";
 
-        const table_forms = "CREATE TABLE IF NOT EXISTS form (
+       private $table_forms = "CREATE TABLE IF NOT EXISTS form (
             f_id INT(3) PRIMARY KEY AUTO_INCREMENT,
             e_id VARCHAR(15),
             createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -84,6 +84,9 @@
             $this->con->query($this->table_departments);
             $this->con->query($this->table_staff);
             $this->con->query($this->table_users);  
+            $this->con->query($this->table_critera);  
+            $this->con->query($this->table_eval);  
+            $this->con->query($this->table_forms);  
         }
 
         function __destruct(){
