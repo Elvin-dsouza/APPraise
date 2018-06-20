@@ -1,3 +1,5 @@
+const fieldSaveHandlerScript = "";
+
 
 /**
  * Inflate Criteria.
@@ -30,10 +32,22 @@ function inflateCriteria(parent, heading, description, max_points) {
 		container.append(criteriaInput);
 		// append the container div to the parent element
 		parent.append(container);
+		let inputField = container.getElementsByTagName("input");
+		inputField[0].addEventListener("blur",saveField());
 }
 
 function saveField(){
-	alert("called");
+	let xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status == 200){
+			// TODO: handle response
+		}
+	}
+
+	xmlhttp.open("POST","",true);
+	// TODO:send form details and the value of the field
+	xmlhttp.send();
+
 	// TODO: save the field value
 }
 

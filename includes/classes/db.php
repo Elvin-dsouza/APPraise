@@ -12,8 +12,6 @@
         private $password = "Dt4iaywxa04H3oNC";
         private $database_name = "Appnotraise";
       
-       
-
        private $table_eval = "CREATE TABLE IF NOT EXISTS eval(
             eval_level INT(3) PRIMARY KEY AUTO_INCREMENT,
             designation VARCHAR(50)
