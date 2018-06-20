@@ -7,7 +7,7 @@
         public $createdOn;
 
         private $connection;
-        function __construct($f_id=-1){
+        function __construct($e_id=-1){
             try{
                 $db = new MyConnection();
                 $this->connection = $db->getConnection();
@@ -18,7 +18,7 @@
             }
             if($f_id != -1){
 
-                $result = $this->connection->query("SELECT * FROM form WHERE f_id = {$f_id}");
+                $result = $this->connection->query("SELECT * FROM form WHERE e_id = {$e_id}");
                 if($result && $result->num_rows >= 1){
                     $row = $result->fetch_assoc();
                     $this->f_id = $row['f_id'];
@@ -53,6 +53,10 @@
             echo "Employee ID: ", $this->e_id;
             echo "Created On: ", Date($this->createdOn);
 
+        }
+
+        function serialize(){
+            return array('f_id'=>$this->f_id, 'e_id' => $this->e_id, 'createdOn' => $this->createdOn);
         }
 
         function __destruct(){
