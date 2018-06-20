@@ -38,10 +38,9 @@
 			let password = document.getElementById("pass").value;
 			// console.log("called");
 			xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechanged = function(){
+			xhttp.onreadystatechange = function(){
 				if(this.readyState == 4 && this.status == 200){
- 					alert("Server Response Null");
-					if(this.responseText != null){
+					if(this.responseText != ""){
 						let promise = JSON.parse(this.responseText);
 						switch (promise.status) {
 							case 0:
@@ -59,13 +58,13 @@
 						alert("Server Response Null");
 					}
 				}
-				else{
-					console.error("Couldnt connect to the server");
-				}
+				else if (this.status == 404 || this.status == 500)
+					alert("Could not Connect to Server Error (500)");
 			}
-			xhttp.open("POST","handler/login_handler.php",true);
- 			// xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.open("post","handler/login_handler.php",true);
+ 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send("e_id="+employee_id+"&password="+password);
+			
 		}
 	</script>
 </body>

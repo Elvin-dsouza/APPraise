@@ -16,16 +16,18 @@
     function authenticate($employee_id, $password){
         $promise = array('status' => 1, 'error' => 'Invalid Password');
         $db = new MyConnection();
+        $password = "";
         $connection = $db->getConnection();
         $hashed = hash("sha512",$password,false);
         $stmt = $connection->prepare("SELECT `password` FROM user WHERE `e_id` = ?");
         $stmt->bind_param("s", $employee_id);
-        $result = $stmt->get_result();
-        if($result && $result->num_rows){
+        $stmt->store_result();
+        $stmt->bind_result($password);
+        echo $stmt->num_rows;
+        if($stmt->num_rows){
             $promise['status'] = 0;
             $promise['error'] = "Invalid Password";
-            $row = $result->fetch_assoc();
-            if($hashed == $row){
+            if($hashed == $password){
                 $promise['status'] = 1;
                 $promise['error'] = NULL;
             }

@@ -501,6 +501,8 @@ span.profile-name
 {
 	padding-left:10px;
 }
+
+
 .button-bar
 {
 	text-align: right;
@@ -515,18 +517,49 @@ span.profile-name
 	color:#333;
 	margin-right:10px;
 	margin-top:5px;
-	padding:30px 10px;
+	padding:0px 10px;
 	display: flex;
-	/* justify-content: center; */
+	justify-content: center;
 	align-items: center;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	background:white;
+	min-height:150px;
 	/* border-radius:10px; */
 	/* margin-bottom:10px; */
 }
+.app-child-container{
+	display:flex;
+	flex-flow:column;
+	flex:1;
+	padding:0px 0px;
+	border-left: 1px solid lightgrey;
+	/* align-self: flex-start; */
+	
 
+}
+
+
+.app-child-container > .appraisal-criteria{
+	box-shadow: 0px 0px 0px transparent;
+	border:0;
+	display: flex;
+	align-items: center;
+	/* border: 1px solid lightgrey; */
+	justify-content: center;
+	/* border:1px solid black; */
+
+}
+.app-child-container > .appraisal-criteria >header {
+	
+	margin: 0px 20px;
+}
+.appraisal-criteria>header.space-even {
+	
+	margin: 0px 20px;
+}
 .appraisal-criteria > header{
-	flex:8;
+	
+	margin:0px 20px;
 }
 
 
@@ -535,6 +568,7 @@ span.profile-name
 	appearance: none;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	border:0;
+	justify-self: flex-end;
 	padding:10px;
 	color:#333;
 	background:#cccc;
@@ -549,13 +583,15 @@ span.profile-name
 }
 
 .appraisal-heading > h1{
-	flex:7;
+	
 	font-weight:400;
 }
 .appraisal-criteria > header > h2{
 	color:#333;
 	font-weight: 400;
 	padding-left:10px;
+	margin-right:10px;
+	margin:0px;
 }
 
 .history-filter-vert-side{
