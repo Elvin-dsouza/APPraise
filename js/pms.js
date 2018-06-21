@@ -68,7 +68,7 @@ function inflateCriteriaFromObject(parent, criteriaObject) {
 	criteriaHeader.append(criteriaHeading);
 	criteriaHeader.append(criteriaDescription);
 	if (criteriaObject.numChildren > 0){
-		
+		childContainer.style.display = "flex";
 		for (let i = 0; i < criteriaObject.children.length; i++) {
 			const child = criteriaObject.children[i];
 			inflateCriteriaFromObject(childContainer, child);

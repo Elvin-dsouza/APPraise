@@ -401,9 +401,9 @@ input[type="text"], input[type="password"], input[type="email"]
 
 header .icon{
 	fill:white;
-	width:40px;
-	height:40px;
-	padding:20px;
+	width:20px;
+	height:20px;
+	padding:5px 10px;
 	cursor: pointer;
 }
 
@@ -436,7 +436,18 @@ header .icon{
 	display: flex;
 	justify-content: flex-end;
 	align-items:center;
+}
 
+.save-indicator{
+	display:flex;
+	align-items: center;
+}
+
+.save-indicator > .save-status{
+	color:#3F51B5;
+	font-style: italic;
+	padding:5px;
+	margin-left:5px;
 }
 
 
@@ -488,8 +499,14 @@ h1.inline-head{
 
 span.profile-name
 {
-	font-weight:100;
-	font-size: 1.5em;
+	font-weight:200;
+	font-size: 1.2em;
+}
+
+.icon-download{
+	fill:#3F51B5;
+	width:30px;
+	height:30px;
 }
 
 .title-bar-huge  h2{
@@ -519,7 +536,7 @@ span.profile-name
 	margin-top:5px;
 	padding:0px 10px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	background:white;
@@ -527,10 +544,16 @@ span.profile-name
 	/* border-radius:10px; */
 	/* margin-bottom:10px; */
 }
+
+.appraisal-criteria  p{
+	font-style: italic;
+
+}
 .app-child-container{
-	display:flex;
+	display:none;
 	flex-flow:column;
-	flex:1;
+	/* flex:1; */
+	
 	padding:0px 0px;
 	border-left: 1px solid lightgrey;
 	/* align-self: flex-start; */
@@ -543,9 +566,11 @@ span.profile-name
 	box-shadow: 0px 0px 0px transparent;
 	border:0;
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
+	margin-right:0px;
 	/* border: 1px solid lightgrey; */
-	justify-content: center;
+	/* justify-content: center; */
 	/* border:1px solid black; */
 
 }
@@ -559,7 +584,7 @@ span.profile-name
 }
 .appraisal-criteria > header{
 	
-	margin:0px 20px;
+	margin-right: 50px;
 }
 
 
@@ -589,8 +614,7 @@ span.profile-name
 .appraisal-criteria > header > h2{
 	color:#333;
 	font-weight: 400;
-	padding-left:10px;
-	margin-right:10px;
+	
 	margin:0px;
 }
 

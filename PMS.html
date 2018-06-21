@@ -20,19 +20,23 @@
 					<title>settings</title>
 					<path d="M12 15.516c1.922 0 3.516-1.594 3.516-3.516s-1.594-3.516-3.516-3.516-3.516 1.594-3.516 3.516 1.594 3.516 3.516 3.516zM19.453 12.984l2.109 1.641c0.188 0.141 0.234 0.422 0.094 0.656l-2.016 3.469c-0.141 0.234-0.375 0.281-0.609 0.188l-2.484-0.984c-0.516 0.375-1.078 0.75-1.688 0.984l-0.375 2.625c-0.047 0.234-0.234 0.422-0.469 0.422h-4.031c-0.234 0-0.422-0.188-0.469-0.422l-0.375-2.625c-0.609-0.234-1.172-0.563-1.688-0.984l-2.484 0.984c-0.234 0.094-0.469 0.047-0.609-0.188l-2.016-3.469c-0.141-0.234-0.094-0.516 0.094-0.656l2.109-1.641c-0.047-0.328-0.047-0.656-0.047-0.984s0-0.656 0.047-0.984l-2.109-1.641c-0.188-0.141-0.234-0.422-0.094-0.656l2.016-3.469c0.141-0.234 0.375-0.281 0.609-0.188l2.484 0.984c0.516-0.375 1.078-0.75 1.688-0.984l0.375-2.625c0.047-0.234 0.234-0.422 0.469-0.422h4.031c0.234 0 0.422 0.188 0.469 0.422l0.375 2.625c0.609 0.234 1.172 0.563 1.688 0.984l2.484-0.984c0.234-0.094 0.469-0.047 0.609 0.188l2.016 3.469c0.141 0.234 0.094 0.516-0.094 0.656l-2.109 1.641c0.047 0.328 0.047 0.656 0.047 0.984s0 0.656-0.047 0.984z"></path>
 				</symbol>
+				<symbol id="icon-download" viewBox="0 0 32 32">
+					<title>download</title>
+					<path d="M16 18l8-8h-6v-8h-4v8h-6zM23.273 14.727l-2.242 2.242 8.128 3.031-13.158 4.907-13.158-4.907 8.127-3.031-2.242-2.242-8.727 3.273v8l16 6 16-6v-8z"></path>
+				</symbol>
 			</defs>
 
 	</svg>
 	<div style="position:sticky; top:0">
 		<header class="title-bar container row" style="background: #3F51B5; justify-content: flex-start;">
-			<div class="container col" style="justify-content: flex-start;">
-				<div class="container c8 center-vert">
+			<div class="container col" style="justify-content: space-between;">
+				<div class="container center-vert">
 					<svg class="icon">
 						<use xlink:href="#icon-menu"></use>
 					</svg>
 					<h1 class="inline-head">AppRaise</h1>
 				</div>
-				<div class="c2 container center-vert">
+				<div class="container center-vert" style="justify-content: flex-end;">
 					<span class="profile-name">Dr. Karunakar Kotegar</span>
 					<svg class="icon">
 						<use xlink:href="#icon-exit_to_app"></use>
@@ -43,7 +47,13 @@
 				</div>
 			</div>
 		</header>
-		<div class="container row" style="width:100vw; justify-content: center; background:#ECEFF1;">
+		<div class="container col" style="width:100vw; justify-content: space-between; background:#ECEFF1;">
+			<div class="save-indicator" style="margin-left:8%">
+				<svg class="icon icon-download">
+					<use xlink:href="#icon-download"></use>
+				</svg>
+				<p class="save-status"> Last Saved, 20/11/1996 3:45 PM</p>
+			</div>
 			<div class="tab-container" style="margin-right:10%">
 				<div class="tab active-tab">Personal Info</div>
 				<div class="tab"> Part A</div>
@@ -52,7 +62,7 @@
 		</div>
 	</div>
 	
-	<main class="container row center" style="max-width:85vw; margin:0 auto; margin-top:30px;" >
+	<main class="container row center" style="max-width:85vw; margin:0 auto; margin-top:10px;" >
 		<div class="appraisal-heading">
 			<h1 id="form-header"></h1>
 			<p id="form-max-points"></p>
