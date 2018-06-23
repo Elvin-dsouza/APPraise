@@ -8,8 +8,8 @@
     class MyConnection
     {
         private $hostname = "localhost";
-        private $user_name = "appraise";
-        private $password = "Dt4iaywxa04H3oNC";
+        private $user_name = "root";
+        private $password = "";
         private $database_name = "Appnotraise";
       
        
