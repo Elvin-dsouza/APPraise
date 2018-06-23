@@ -65,6 +65,17 @@
                 "numChildren": 0
             }
             ]
+        },
+        {
+            "c_id": 3,
+            "s_id": 2,
+            "heading": "Test Heading C",
+            "description": "Description",
+            "part": "A",
+            "eval_level": 0,
+            "numChildren": 0,
+            "max_points":10,
+            "value": 10
         }
         ]';
     }
