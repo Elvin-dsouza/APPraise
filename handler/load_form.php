@@ -1,9 +1,17 @@
 <?php
     require_once '../includes/classes/form.php';
+    require_once '../includes/classes/criteria.php';
     $form = new Form($_REQUEST['e_id']);
     $form_id = $form->f_id;
     // TODO: generalise the criteria class to include the part
+    $criteria = new Criteria(11,true, $form_id);
+    $out_array = array();
+    
+    $out_array[]= $criteria->data;
+
+    echo json_encode($out_array);
     // TODO: replace the stub with an actual class and its methods
+    
     function formStub(){
          echo '[
         {
@@ -80,7 +88,8 @@
         ]';
     }
 
-    formStub();
+
+    // formStub();
     // Temporary Stub
    
 

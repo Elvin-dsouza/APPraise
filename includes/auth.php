@@ -1,7 +1,7 @@
 <?php
     /**
      * @package Authentication
-     * @author Elvin Shawn Dsouza
+     * @author Elvin Shawn Dsouza, Shwetha Bhagwath
      * @version 0.1 | Created on Monday 18th Jun 2018 08:17 PM
      */
 
