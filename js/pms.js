@@ -59,7 +59,7 @@ function inflateCriteriaFromObject(parent, criteriaObject) {
 	let criteriaHeader = document.createElement("header"); // container for the heading
 	let criteriaHeading = document.createElement("h2"); // the actual heading for the criteria
 	let criteriaDescription = document.createElement("p"); // the description for the criteria
-
+	container.setAttribute('data-cid', criteriaObject.c_id);
 	criteriaHeading.innerHTML = criteriaObject.heading;
 	if (criteriaObject.description !== undefined)
 		criteriaDescription.innerHTML = criteriaObject.description;
@@ -76,11 +76,14 @@ function inflateCriteriaFromObject(parent, criteriaObject) {
 	}
 	else{
 		let criteriaInput = document.createElement("input");
+		criteriaInput.className = "c_input_item";
 		criteriaInput.setAttribute('type', 'number');
 		criteriaInput.setAttribute('max', criteriaObject.max_points);
 		criteriaInput.setAttribute('min', 0);
 		criteriaInput.setAttribute('placeholder', "[0 - " + criteriaObject.max_points + "]");
 		criteriaInput.setAttribute('value', criteriaObject.value);
+		criteriaInput.setAttribute('data-sid', criteriaObject.s_id);
+		criteriaInput.setAttribute('data-cid', criteriaObject.c_id);
 		container.append(criteriaInput);
 		let inputField = container.getElementsByTagName("input");
 		inputField[0].addEventListener("blur", saveField());
@@ -90,19 +93,54 @@ function inflateCriteriaFromObject(parent, criteriaObject) {
 	parent.append(container);
 	
 }
+function saveAllFields(){
+	console.log("test");
+	let values = document.getElementsByClassName("c_input_item");
+	let scores = [];
+	for (let i = 0; i < values.length; i++) {
+		let tempObj = {};
+		if (values[i].dataset.sid == null) {
+			tempObj.s_id = -1;
+			// tempObj.c_id = -1;
+			tempObj.c_id = values[i].dataset.cid;
+			tempObj.value = values[i].value;
 
-function saveField(){
+		}
+		else {
+			tempObj.s_id = values[i].dataset.sid;
+			tempObj.c_id = values[i].dataset.cid;
+			tempObj.value = values[i].value;
+			
+		}
+		scores.push(tempObj)
+	}
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
-			// TODO: handle response
+			
+			saveIndicatorComplete();
 		}
 		// TODO: handle errors
 	}
-	xmlhttp.open("POST","",true);
+	xmlhttp.open("POST","handler/save_form.php",true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	// TODO:send form details and the value of the field
-	xmlhttp.send();
+	xmlhttp.send("json="+JSON.stringify(scores)+"&f_id="+"x");
+	
+}
+
+function saveField(){
+	// let xmlhttp = new XMLHttpRequest();
+	// xmlhttp.onreadystatechange = function(){
+	// 	if(this.readyState == 4 && this.status == 200){
+	// 		// TODO: handle response
+	// 	}
+	// 	// TODO: handle errors
+	// }
+	// xmlhttp.open("POST","",true);
+	// xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	// TODO:send form details and the value of the field
+	// xmlhttp.send("json="+JSON.stringify());
 }
 
 
@@ -113,9 +151,11 @@ function loadForm(e_id, formPart){
 		if(this.readyState == 4 && this.status == 200)
 		{
 			let form = JSON.parse(this.responseText);
+			// console.log(this.response);
 			for (let i = 0; i < form.length; i++) {
 				const item = form[i];
-				inflateCriteriaFromObject(formContainer,item);
+				if (item !== null && item !== undefined){}
+					inflateCriteriaFromObject(formContainer,item);
 			}
 		}
 		//TODO: handle errors
@@ -125,6 +165,8 @@ function loadForm(e_id, formPart){
 	xhttp.send("e_id="+e_id+"&formPart="+formPart);
 
 }
+
+
 
 
 

@@ -34,7 +34,7 @@
 					<svg class="icon">
 						<use xlink:href="#icon-menu"></use>
 					</svg>
-					<h1 class="inline-head">AppRaise</h1>
+					<h1 class="inline-head">AppRaise - Form Creation</h1>
 				</div>
 				<div class="container center-vert" style="justify-content: flex-end;">
 					<span class="profile-name">Dr. Karunakar Kotegar</span>
@@ -48,11 +48,11 @@
 			</div>
 		</header>
 		<div class="container col" style="width:100vw; justify-content: space-between; background:#ECEFF1;">
-			<div class="save-indicator" id="saveIndicator" style="margin-left:8%">
-				<svg class="icon icon-download" id="saveButton">
+			<div class="save-indicator" style="margin-left:8%">
+				<svg class="icon icon-download">
 					<use xlink:href="#icon-download"></use>
 				</svg>
-				<p class="save-status" id="saveIndicatorStatus"> Last Saved, 20/11/1996 3:45 PM</p>
+				<p class="save-status"> Last Saved, 20/11/1996 3:45 PM</p>
 			</div>
 			<div class="tab-container" style="margin-right:10%">
 				<div class="tab active-tab">Personal Info</div>
@@ -66,28 +66,47 @@
 	</div>
 	
 	<main class="container row center" style="max-width:85vw; margin:0 auto; margin-top:10px;" >
-		<div class="appraisal-heading" style="justify-content: space-between">
+		<div class="appraisal-add-form" style="justify-content: space-between">
 			<h1 id="form-header">PART A: Teaching Info</h1>
 			<p id="form-max-points">MAX 50 Points</p>
 		</div>
-		<div id="appraisal-elements">
+		<div id="appraisal-add-form">
+			<div class="container add-criteria row">
+				<span class="container col">
+					<input type="text" id="addHeading" placeholder = "Heading" class="c8">
+					<input type="number" id="addMax"  placeholder="Max Points" class="c1" style="margin-left:10px;">
+				</span>
+				<input type="text" id="addDescription" placeholder = "Criteria Description">
+				<div id="add-form-children" class="container row">
+					<div class="buttonAddChild container row center-vert">
+						<p class="tab">	+ Add Sub-Criteria </p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</main>
-	<script src="js/save_indicator.js"></script>
-	<script src = "js/pms.js"></script>
 	<script>
-		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
-		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
-		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
-		loadForm('MAHE00009',1);
 
-		 var saveButton = document.getElementById("saveButton"); 
+		function addNewCriteria(){
+			let sendobject = {};
+			let addForm = document.getElementById("appraisal-add-form");
+			let criteria = addForm.getElementsByClassName("add-criteria");
+			// TODO: handle a single criteria without any other sub criteria
+			let cHeading = criteria[0].getElementById("addHeading"); 
+			let cDescription = criteria[0].getElementById("addDescription"); 
+			let cMaxPoints = criteria[0].getElementById("addMax");  
+			sendObject.heading = cHeading;
+			sendObject.description = cDescription;
+			sendObject.max_points = cMaxPoints;
+			sendObject.isSubCriteria = 0;
+			sendObject.parent = null;
+			sendObject.eval_level = null;
+			sendObject.part = 1;
+			sendObject.children = criteria.length() - 1;
+		}
 
-		 saveButton.onclick=function(){
-			saveIndicatorActivate();
-			saveAllFields();
-			
-		 } 
+		
+
 	</script>
 </body>
 </html>

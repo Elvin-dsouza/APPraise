@@ -136,6 +136,21 @@ input[type="text"], input[type="password"], input[type="email"]
 
 }
 
+#appraisal-elements > .appraisal-criteria{
+	padding:20px;
+}
+
+#appraisal-add-form input[type="number"]
+{
+	margin-top:10px;
+	font-size:2em;
+	border-radius: 3px;
+	border:0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+	0 1px 2px rgba(0, 0, 0, 0.24);
+	padding:10px;
+}
+
 .login-form input[type="submit"]
 {
 	margin-top:20px;
@@ -450,9 +465,13 @@ header .icon{
 
 	align-items: center;
 }
+.save-active  .save-status
+{
+	color:#3F51B5;
+}
 
 .save-indicator > .save-status{
-	color:#3F51B5;
+	
 	color:gray;
 	font-style: italic;
 	padding:5px;

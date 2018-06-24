@@ -205,4 +205,28 @@
     const FORM_PART_B2 = 3;
     const FORM_PART_B3 = 4;
 
+    /**
+     * Function getFormPart
+     * Gets the form's criteria as an array of objects given the form id and the partition id
+     * 
+     */
+    function getFormPart($form_id, $part = FORM_PART_A){
+        $output = array();
+        $db = new MyConnection();
+        $con = $db->getConnection();
+        $result = $con->query("SELECT * FROM criteria WHERE part = {$part} AND isSubCriteria <> 1");
+        if($result && $result->num_rows){
+            while($row = $result->fetch_assoc()){
+                 $temp =  new Criteria($row['c_id'],true,$form_id);
+                $output[] = $temp->data;
+            }
+           
+        }
+        return $output;
+    }
+
+    function getForm($form_id){
+        
+    }
+
 ?>
