@@ -26,6 +26,7 @@
             isSubCriteria TINYINT NOT NULL,
             parent_id INT(3),
             numChildren INT(3) DEFAULT 0,
+            max_points INT(5) DEFAULT 10,
             FOREIGN KEY(parent_id) REFERENCES criteria(c_id) ON DELETE CASCADE,
             FOREIGN KEY(`eval_level`) REFERENCES eval(`eval_level`)
             )";
@@ -33,6 +34,7 @@
        private $table_forms = "CREATE TABLE IF NOT EXISTS form (
             f_id INT(3) PRIMARY KEY AUTO_INCREMENT,
             e_id VARCHAR(15),
+            f_status INT(3),
             createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
             FOREIGN KEY (e_id) REFERENCES staff(e_id) ON DELETE CASCADE)";
 
@@ -41,13 +43,14 @@
             `e_id` VARCHAR(15),
             `email` VARCHAR(128),
             `password` VARCHAR(512),
-            `updated` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(), FOREIGN KEY(`e_id`) REFERENCES `staff`(`e_id`) ON DELETE CASCADE)";
+            `updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP() , FOREIGN KEY(`e_id`) REFERENCES `staff`(`e_id`) ON DELETE CASCADE)";
 
         private $table_departments = "CREATE TABLE IF NOT EXISTS `department` (`dept_id` INT(3) PRIMARY KEY AUTO_INCREMENT,
             `dept_name` VARCHAR(128)
             )";
 
         private $table_staff = "CREATE TABLE IF NOT EXISTS `staff`(`e_id` VARCHAR(15) PRIMARY KEY,
+            `name` VARCHAR(128),
             `dept_id` INT(3),
             `dob` DATE,
             `doj` DATE,
@@ -56,9 +59,20 @@
             `age` SMALLINT(3),
             `pfno` INT(15),
             `superior_id` VARCHAR(15),
+            
             FOREIGN KEY (superior_id) REFERENCES staff(e_id),
             FOREIGN KEY (dept_id) REFERENCES department(dept_id) ON DELETE CASCADE)";
         
+        public $table_score = "CREATE TABLE IF NOT EXISTS score ( 
+            s_id INT(10) PRIMARY KEY AUTO_INCREMENT,
+            f_id INT(3), 
+            c_id INT(3),
+            score DECIMAL(4,2),
+            updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
+            FOREIGN KEY (f_id) REFERENCES form (f_id) ON DELETE CASCADE,
+            FOREIGN KEY (c_id) REFERENCES criteria(c_id) ON DELETE CASCADE)";
+
+
 
         private $con;
 
@@ -84,7 +98,8 @@
             $this->con->query($this->table_users);  
             $this->con->query($this->table_critera);  
             $this->con->query($this->table_eval);  
-            $this->con->query($this->table_forms);  
+            $this->con->query($this->table_forms); 
+            $this->con->query($this->table_score);   
         }
 
         function __destruct(){

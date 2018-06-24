@@ -18,7 +18,7 @@
             }
             if($f_id != -1){
 
-                $result = $this->connection->query("SELECT * FROM form WHERE e_id = {$e_id}");
+                $result = $this->connection->query("SELECT * FROM form WHERE e_id = '{$e_id}'");
                 if($result && $result->num_rows >= 1){
                     $row = $result->fetch_assoc();
                     $this->f_id = $row['f_id'];

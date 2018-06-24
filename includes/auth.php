@@ -1,7 +1,7 @@
 <?php
     /**
      * @package Authentication
-     * @author Elvin Shawn Dsouza
+     * @author Elvin Shawn Dsouza, Shwetha Bhagwath
      * @version 0.1 | Created on Monday 18th Jun 2018 08:17 PM
      */
 
@@ -51,11 +51,15 @@
          $db = new MyConnection();
          $connection = $db->getConnection();
          $hashed = hash("sha512",$password,false);
+
+
          $staff = new Staff($e_id);
          if(!$staff->exists()){
             if($staff->add($data) == 1){
                // TODO: Create entry in user table
                // TODO: return Succesful promise
+               $promise = array('status' => 1, 'error' => 'none');
+
             }
             else {
                 $promise = array('status' => -2, 'error' => 'Error While updating staff information');
