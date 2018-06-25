@@ -127,6 +127,7 @@ input[type="submit"]{
 
 input[type="text"], input[type="password"], input[type="email"]
 {
+	background:white;
 	margin-top:10px;
 	font-size:2em;
 	border-radius: 3px;

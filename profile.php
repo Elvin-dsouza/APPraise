@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if($_SESSION['loggedIn'] !=1 ){
+        header("location:login.php");
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +51,7 @@
         </svg>
         <header>
             <h1>Appraise</h1>
-            <h3>Dr. Karunakar Kotegar</h3>
+            <h3><?php echo $_SESSION['name'];?></h3>
         </header>
         <nav>
             <div class="nav-item">
@@ -63,7 +70,7 @@
                 </div>
                 <p>Personal Information</p>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" id="logoutButton">
                 <div class="nav-circ">
                     <svg class="icon">
                         <use xlink:href="#icon-exit_to_app"></use>
@@ -72,5 +79,12 @@
                 <p>Logout</p>
             </div>
         </nav>
+        <script>
+            let logoutButton = document.getElementById("logoutButton");
+            logoutButton.onclick = function () {
+                window.location = "logout.php";
+            }
+        
+        </script>
     </body>
 </html>

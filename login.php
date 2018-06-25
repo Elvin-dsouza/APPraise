@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if($_SESSION['loggedIn'] == 1 ){
+        header("location:profile.php");
+    }
+?>
 <!DOCTYPE html>
 <!-- 
 	Login Form
@@ -11,22 +17,24 @@
 <html>
 <head>
 	<title>MIT Appraise</title>
-	<link rel="stylesheet" type="text/css" href="css/modernflex.css">
+	<link rel="stylesheet" type="text/css" href="css/profile-page.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="container row center-both" style="width:100vw; height:100vh;">
 	<div>
 		<div class="login-form container padding-20 row">
-			<img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/key-icon.png">
+            <!-- <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/key-icon.png"> -->
+            <h1 style="font-size:3em;">MIT Appraise</h1>
+            <hr style="width:100%; background:white; border:1px solid white;">
 			<!-- email and password -->
-			<input type="text" name="e_id" placeholder="MAHE00000" id="eId" required>
+			<input type="text" name="e_id" placeholder="Employee ID/ MAHE Email" id="eId" required>
 			<input type="password" name="password" placeholder="password" id="pass" required>
 			<!-- container for the error message -->
 			<span id="error"></span>
 			<!-- container to store the buttons for actions on this form -->
 			<span class="container login-form col center-both">
 				<button id="login" class="button" style="margin-left:10px;">Login</button>
-				<button onclick="window.location='signup'" class="button-inverse">Sign Up</button>
+				<button onclick="window.location='signup.php'" class="button-inverse">Sign Up</button>
 			</span>
 		</div>
 	</div>
@@ -50,7 +58,7 @@
 								console.warn("Error: Employee Id Does not exist")
 								break;
 							case 1:
-								console.log("Succesfully logged in")
+								window.location="profile.php";
 								break;
 						}
 					}
