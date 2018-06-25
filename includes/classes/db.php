@@ -10,8 +10,8 @@
         private $hostname = "localhost";
         private $user_name = "root";
         private $password = "";
-        private $database_name = "Appnotraise";
-      
+        private $database_name = "Appraise";
+
        private $table_eval = "CREATE TABLE IF NOT EXISTS eval(
             eval_level INT(3) PRIMARY KEY AUTO_INCREMENT,
             designation VARCHAR(50)
@@ -58,7 +58,7 @@
             `superior_id` VARCHAR(15),
             FOREIGN KEY (superior_id) REFERENCES staff(e_id),
             FOREIGN KEY (dept_id) REFERENCES department(dept_id) ON DELETE CASCADE)";
-        
+
 
         private $con;
 
@@ -81,15 +81,15 @@
         function createTables(){
             $this->con->query($this->table_departments);
             $this->con->query($this->table_staff);
-            $this->con->query($this->table_users);  
-            $this->con->query($this->table_critera);  
-            $this->con->query($this->table_eval);  
-            $this->con->query($this->table_forms);  
+            $this->con->query($this->table_users);
+            $this->con->query($this->table_critera);
+            $this->con->query($this->table_eval);
+            $this->con->query($this->table_forms);
         }
 
         function __destruct(){
             // $this->con->close();
         }
     }
-    
+
 ?>
