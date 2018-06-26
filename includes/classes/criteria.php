@@ -31,7 +31,7 @@
                 return;
             }
             if($c_id != -1){
-               
+
                 $result = $this->connection->query("SELECT * FROM criteria WHERE c_id = {$c_id}");
                 if($result && $result->num_rows >= 1){
                     $row = $result->fetch_assoc();
@@ -52,13 +52,13 @@
                 else {
                     $points;
                     if($use_scores == true){
-                        
+
                         $points = Score::AppraisalFormCriteriaScore($c_id, $f_id);
                         // echo "<br/>";
                         if($points != false){
                            $this->data['s_id'] = $points->s_id;
                            $this->data['value'] = $points->score;
-                        } 
+                        }
                     }
                     else {
                         $this->data['value'] = 0;
@@ -143,9 +143,9 @@
         public $c_id;
         public $f_id;
         public $score;
-        public $create_table = "CREATE TABLE IF NOT EXISTS score ( 
+        public $create_table = "CREATE TABLE IF NOT EXISTS score (
             s_id INT(10) PRIMARY KEY AUTO_INCREMENT,
-            f_id INT(3), 
+            f_id INT(3),
             c_id INT(3),
             score DECIMAL(4,2),
             FOREIGN KEY (f_id) REFERENCES form (f_id) ON DELETE CASCADE,
@@ -156,12 +156,12 @@
             $this->connection = $db->getConnection();
             $this->connection->query($this->create_table);
             if($s_id == -1){
-                
+
                 $this->s_id = -1;
                 $this->f_id = -1;
                 $this->c_id = -1;
                 $this->score = 0;
-            
+
             }
             else{
                 // TODO: Convert to prepared Statementns
@@ -224,7 +224,7 @@
     /**
      * Function getFormPart
      * Gets the form's criteria as an array of objects given the form id and the partition id
-     * 
+     *
      */
     function getFormPart($form_id, $part = FORM_PART_A){
         $output = array();
@@ -236,13 +236,13 @@
                  $temp =  new Criteria($row['c_id'],true,$form_id);
                 $output[] = $temp->data;
             }
-           
+
         }
         return $output;
     }
 
     function getForm($form_id){
-        
+
     }
 
 ?>

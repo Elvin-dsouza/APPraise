@@ -8,10 +8,10 @@
     class MyConnection
     {
         private $hostname = "localhost";
-        private $user_name = "appraise";
-        private $password = "Dt4iaywxa04H3oNC";
-        private $database_name = "Appnotraise";
-      
+        private $user_name = "root";
+        private $password = "";
+        private $database_name = "Appraise";
+
        private $table_eval = "CREATE TABLE IF NOT EXISTS eval(
             eval_level INT(3) PRIMARY KEY AUTO_INCREMENT,
             designation VARCHAR(50)
@@ -59,13 +59,13 @@
             `age` SMALLINT(3),
             `pfno` INT(15),
             `superior_id` VARCHAR(15),
-            
+
             FOREIGN KEY (superior_id) REFERENCES staff(e_id),
             FOREIGN KEY (dept_id) REFERENCES department(dept_id) ON DELETE CASCADE)";
-        
-        public $table_score = "CREATE TABLE IF NOT EXISTS score ( 
+
+        public $table_score = "CREATE TABLE IF NOT EXISTS score (
             s_id INT(10) PRIMARY KEY AUTO_INCREMENT,
-            f_id INT(3), 
+            f_id INT(3),
             c_id INT(3),
             score DECIMAL(4,2),
             updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
@@ -95,16 +95,16 @@
         function createTables(){
             $this->con->query($this->table_departments);
             $this->con->query($this->table_staff);
-            $this->con->query($this->table_users);  
-            $this->con->query($this->table_critera);  
-            $this->con->query($this->table_eval);  
-            $this->con->query($this->table_forms); 
-            $this->con->query($this->table_score);   
+            $this->con->query($this->table_users);
+            $this->con->query($this->table_critera);
+            $this->con->query($this->table_eval);
+            $this->con->query($this->table_forms);
+            $this->con->query($this->table_score);
         }
 
         function __destruct(){
             // $this->con->close();
         }
     }
-    
+
 ?>
