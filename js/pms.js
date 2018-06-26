@@ -93,6 +93,61 @@ function inflateCriteriaFromObject(parent, criteriaObject) {
 	parent.append(container);
 	
 }
+
+
+
+function inflateCriteriaFromObjectAsTable(parent, criteriaObject) {
+
+	let container = document.createElement("table"); // create a container div element
+	let parentRowContainer = document.createElement("td");
+	let childRowContainer = document.createElement("td");
+	let parentRow = document.createElement("div");
+	let childRow = document.createElement("div");
+	container.className = "appraisal-criteria"; 
+	parentRow.className = "appraisal-criteria"; // give the container a classname
+	childRow.className = "app-child-container"; // give the container a classname
+	parentRowContainer.append(parentRow);
+	childRowContainer.append(childRow);
+	let criteriaHeader = document.createElement("header"); // container for the heading
+	let criteriaHeading = document.createElement("h2"); // the actual heading for the criteria
+	let criteriaDescription = document.createElement("p"); // the description for the criteria
+	container.setAttribute('data-cid', criteriaObject.c_id);
+	criteriaHeading.innerHTML = criteriaObject.heading;
+	if (criteriaObject.description !== undefined)
+		criteriaDescription.innerHTML = criteriaObject.description;
+	// append all the elements into the container div
+	parentRow.append(criteriaHeader);
+	criteriaHeader.append(criteriaHeading);
+	criteriaHeader.append(criteriaDescription);
+	if (criteriaObject.numChildren > 0) {
+		childRow.style.display = "flex";
+		for (let i = 0; i < criteriaObject.children.length; i++) {
+			const child = criteriaObject.children[i];
+			inflateCriteriaFromObjectAsTable(childRow, child);
+		}
+	}
+	else {
+		let criteriaInput = document.createElement("input");
+		criteriaInput.className = "c_input_item";
+		criteriaInput.setAttribute('type', 'number');
+		criteriaInput.setAttribute('max', criteriaObject.max_points);
+		criteriaInput.setAttribute('min', 0);
+		criteriaInput.setAttribute('placeholder', "[0 - " + criteriaObject.max_points + "]");
+		criteriaInput.setAttribute('value', criteriaObject.value);
+		criteriaInput.setAttribute('data-sid', criteriaObject.s_id);
+		criteriaInput.setAttribute('data-cid', criteriaObject.c_id);
+		parentRow.append(criteriaInput);
+		let inputField = parentRow.getElementsByTagName("input");
+		inputField[0].onblur = function(){
+			saveField();
+		}
+	}
+	// append the container div to the parent element
+	container.append(parentRowContainer);
+	container.append(childRowContainer);
+	parent.append(container);
+
+}
 function saveAllFields(){
 	console.log("test");
 	let values = document.getElementsByClassName("c_input_item");

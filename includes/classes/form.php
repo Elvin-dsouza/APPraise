@@ -25,9 +25,34 @@
                     $this->e_id = $row['e_id'];
                     $this->createdOn = $row['createdOn'];
                 }
+                else {
+                    $this->f_id = -1;
+                }
             }
         }
 
+        static function exists($emp){
+            $db = new MyConnection();
+            $c = $db->getConnection();
+            $res = $c->query("SELECT f_id FROM form WHERE e_id='{$emp}'");
+            if($res && $res->num_rows > 0)
+                return true;
+            else
+                return false;
+        }
+
+        static function validForm($fid){
+            $db = new MyConnection();
+            $c = $db->getConnection();
+            $res = $c->query("SELECT e_id FROM form WHERE f_id='{$fid}'");
+            if($res && $res->num_rows > 0){
+                $row = $res->fetch_assoc();
+                return new Form($row['e_id']);
+            }
+            else
+                return false;
+        }
+        
         function add($e_id){
             $stmt = $this->connection->prepare("INSERT INTO form (e_id) VALUES (?)");
             $stmt->bind_param("s",$e_id);

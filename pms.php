@@ -1,5 +1,23 @@
 <?php
+    session_start();
+    require_once 'includes/classes/form.php';
+    if($_SESSION['loggedIn'] == 1){
+        if(!isset($_GET['f_id']) || $_GET['f_id'] < 0){
+            die("Error: Possible Attempt to Gain Unauthorised access, your IP has been logged and the administration has been notified.");
+        }
+        else{
+            $e_id = Form::validForm($_GET['f_id']);
+            if(!$e_id)
+                die("Error: Possible Attempt to Gain Unauthorised access, your IP has been logged and the administration has been notified.");
+            else {
+                
+            }
+        }
 
+    }
+    else {
+        header('location:login.php');
+    }
 
 
 ?>
@@ -43,7 +61,7 @@
 					<h1 class="inline-head">AppRaise</h1>
 				</div>
 				<div class="container center-vert" style="justify-content: flex-end;">
-					<span class="profile-name">Dr. Karunakar Kotegar</span>
+					<span class="profile-name"><?php echo $_SESSION['name'];?></span>
 					<svg class="icon">
 						<use xlink:href="#icon-exit_to_app"></use>
 					</svg>
@@ -60,13 +78,12 @@
 				</svg>
 				<p class="save-status" id="saveIndicatorStatus"> Last Saved, 20/11/1996 3:45 PM</p>
 			</div>
-			<div class="tab-container" style="margin-right:10%">
+			<div class="tab-container" id="partSelector" style="margin-right:10%">
 				<!-- <div class="tab active-tab">Personal Info</div> -->
-				<div class="tab active-tab" data-part="1">A</div>
-				<div class="tab" data-part="2">B2</div>
-				<div class="tab" data-part="3">B1</div>
-				<div class="tab" data-part="4">B3</div>
-				
+				<div class="tab active-tab" onclick="changeForm(this,1)">A</div>
+				<div class="tab" onclick="changeForm(this,2)">B2</div>
+				<div class="tab" onclick="changeForm(this,3)">B1</div>
+				<div class="tab" onclick="changeForm(this,4)">B3</div>	
 			</div>
 		</div>
 	</div>
@@ -74,7 +91,7 @@
 	<main class="container row center" style="max-width:85vw; margin:0 auto; margin-top:10px;" >
 		<div class="appraisal-heading" style="justify-content: space-between">
 			<h1 id="form-header">PART A: Teaching Info</h1>
-			<p id="form-max-points">MAX 50 Points</p>
+			<!-- <p id="form-max-points">MAX 50 Points</p> -->
 		</div>
 		<div id="appraisal-elements">
 		</div>
@@ -82,17 +99,52 @@
 	<script src="js/save_indicator.js"></script>
 	<script src = "js/pms.js"></script>
 	<script>
+        
 		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
 		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
 		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
-		loadForm('MAHE00009',1);
+        loadForm('MAHE00009',1);
+        
+        function activeTab($obj){
+            let partSelector = document.getElementById("partSelector");
+            let tabs = partSelector.getElementsByClassName("tab");
+            for (let i = 0; i < tabs.length; i++) {
+                const element = tabs[i];
+                tabs[i].className="tab"; 
+            }
+            $obj.className = "tab active-tab";
 
+        }
+
+        function changeForm($obj,$part){
+            let FORM_PART_A_HEADING = "PART A: Teaching Support";
+            let FORM_PART_B1_HEADING = "PART B1: Research Accomplishments";
+            let FORM_PART_B2_HEADING = "PART B2: Professional Accomplishments";
+            let FORM_PART_B3_HEADING = "PART B3: Administrative and Other Activities";
+            let hding = document.getElementById("form-header");
+            switch ($part) {
+                case 1:
+                    hding.innerHTML = FORM_PART_A_HEADING;
+                    break;
+                case 2:
+                    hding.innerHTML = FORM_PART_B1_HEADING;
+                    break;
+                case 3:
+                    hding.innerHTML = FORM_PART_B2_HEADING;
+                    break;
+                case 4:
+                    hding.innerHTML = FORM_PART_B3_HEADING;
+                    break;
+            }
+            document.getElementById("appraisal-elements").innerHTML="";
+            loadForm('MAHE00009',$part);
+            activeTab($obj);
+        }
 		 var saveButton = document.getElementById("saveButton"); 
 
 		 saveButton.onclick=function(){
 			saveIndicatorActivate();
 			saveAllFields();
-			
 		 } 
 	</script>
 </body>

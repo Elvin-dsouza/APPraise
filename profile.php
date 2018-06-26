@@ -46,6 +46,10 @@
                     <title>person_pin</title>
                     <path d="M18 15.984v-0.891c0-2.016-3.984-3.094-6-3.094s-6 1.078-6 3.094v0.891h12zM12 5.297c-1.5 0-2.719 1.219-2.719 2.719s1.219 2.672 2.719 2.672 2.719-1.172 2.719-2.672-1.219-2.719-2.719-2.719zM18.984 2.016c1.078 0 2.016 0.891 2.016 1.969v14.016c0 1.078-0.938 2.016-2.016 2.016h-3.984l-3 3-3-3h-3.984c-1.125 0-2.016-0.938-2.016-2.016v-14.016c0-1.078 0.891-1.969 2.016-1.969h13.969z"></path>
                 </symbol>
+                <symbol id="icon-assignment" viewBox="0 0 24 24">
+                    <title>assignment</title>
+                    <path d="M17.016 9v-2.016h-10.031v2.016h10.031zM17.016 12.984v-1.969h-10.031v1.969h10.031zM14.016 17.016v-2.016h-7.031v2.016h7.031zM12 3c-0.563 0-0.984 0.422-0.984 0.984s0.422 1.031 0.984 1.031 0.984-0.469 0.984-1.031-0.422-0.984-0.984-0.984zM18.984 3c1.078 0 2.016 0.938 2.016 2.016v13.969c0 1.078-0.938 2.016-2.016 2.016h-13.969c-1.078 0-2.016-0.938-2.016-2.016v-13.969c0-1.078 0.938-2.016 2.016-2.016h4.172c0.422-1.172 1.5-2.016 2.813-2.016s2.391 0.844 2.813 2.016h4.172z"></path>
+                </symbol>
             </defs>
 
         </svg>
@@ -54,14 +58,24 @@
             <h3><?php echo $_SESSION['name'];?></h3>
         </header>
         <nav>
-            <div class="nav-item">
-                <div class="nav-circ-dotted">
-                    <svg class="icon">
-                        <use xlink:href="#icon-add"></use>
-                    </svg>
-                </div>
-                <p>Create Form</p>
-            </div>
+            <?php 
+                require_once 'includes/classes/form.php';
+                function showButton(){
+                    // echo $_SESSION['e_id'];
+                    if(Form::exists($_SESSION['e_id']))
+                    {
+                        $form = new Form($_SESSION['e_id']);
+                        echo '<div class="nav-item" id="openForm" data-fid="'.$form->f_id.'"><div class="nav-circ"><svg class="icon"><use xlink:href="#icon-assignment"></use></svg></div><p>Appraisal Form</p></div>';
+                    }
+                    else {
+                        echo '<div class="nav-item" id="createForm"><div class="nav-circ-dotted"><svg class="icon"><use xlink:href="#icon-add"></use></svg></div><p>Create Form</p></div>';
+                    }
+                }
+
+                showButton();
+            
+            ?>
+           
             <div class="nav-item">
                 <div class="nav-circ">
                     <svg class="icon">
@@ -84,7 +98,12 @@
             logoutButton.onclick = function () {
                 window.location = "logout.php";
             }
-        
+
+            let openForm = document.getElementById("openForm");
+            openForm.onclick = function () {
+                window.location = "pms.php?f_id="+openForm.dataset.fid;
+            }
+            
         </script>
     </body>
 </html>

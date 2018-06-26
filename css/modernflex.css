@@ -484,13 +484,14 @@ header .icon{
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	background:white;
 	margin:10px;
-	color:#3F51B5;
+	color:darkgrey;
 	border-radius: 50px;
 	padding:10px 20px;
 	cursor: pointer;
 }
 
 .active-tab{
+	/* border:1px solid #E91E63; */
 	color:#3F51B5;
 	font-weight:500;
 
@@ -559,7 +560,7 @@ span.profile-name
 	color:#333;
 	margin-right:10px;
 	margin-top:5px;
-	padding:0px 20px;
+	padding:0px 30px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -578,12 +579,13 @@ span.profile-name
 
 }
 .app-child-container{
+	
 	display:none;
 	flex-flow:column;
 	/* flex:1; */
-	
+	margin-top:0px;
 	padding:0px 0px;
-	border-left: 1px solid #333;
+	/* border-left: 1px solid #333; */
 	/* align-self: flex-start; */
 	
 
@@ -592,9 +594,16 @@ span.profile-name
 
 .app-child-container > .appraisal-criteria{
 	box-shadow: 0px 0px 0px transparent;
+	/* background:lightgrey; */
 	border:0;
-	padding-right:0px;
+	border-bottom:1px solid lightgray;
+	border-radius:0;
+	min-height: auto;
+	/* padding-right:10px; */
+	/* border:1px solid black; */
 	display: flex;
+	padding-right:0px;
+	/* margin-top:0px; */
 	justify-content: space-between;
 	align-items: center;
 	margin-right:0px;
@@ -610,7 +619,8 @@ span.profile-name
 }
 
 .app-child-container>.appraisal-criteria>header > h2 {
-	font-size: 1.2em;
+	font-size: 1em;
+	font-weight:400px;
 }
 .appraisal-criteria>header.space-even {
 	
@@ -651,7 +661,7 @@ span.profile-name
 }
 .appraisal-criteria > header > h2{
 	color:#333;
-	font-weight: 400;
+	/* font-weight: 400; */
 	
 	margin:0px;
 }

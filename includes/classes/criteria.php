@@ -180,6 +180,18 @@
 
         }
 
+        function update($uScore){
+            $stmt = $this->connection->prepare("UPDATE score SET score = ? WHERE s_id = ?");
+            $stmt->bind_param("ii",$uScore,$this->s_id);
+            if($stmt->execute()){
+                return $this->connection->insert_id;
+            }
+            else {
+                echo $stmt->error;
+                return 0;
+            }
+        }
+
         static function AppraisalFormCriteriaScore($criteria_id, $form_id){
             $db = new MyConnection();
             $c = $db->getConnection();
@@ -201,9 +213,13 @@
     //  PARTS
 
     const FORM_PART_A = 1;
+    const FORM_PART_A_HEADING = "PART A: Teaching Support";
     const FORM_PART_B1 = 2;
+    const FORM_PART_B1_HEADING = "PART B1: Research Accomplishments";
     const FORM_PART_B2 = 3;
+    const FORM_PART_B2_HEADING = "PART B2: Professional Accomplishments";
     const FORM_PART_B3 = 4;
+    const FORM_PART_B3_HEADING = "PART B3: Administrative and Other Activities";
 
     /**
      * Function getFormPart

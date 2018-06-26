@@ -22,6 +22,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <img src="https://sis.manipal.edu/image.aspx?FileName=P170970008.jpg">
+   
+    <!-- <img src="https://sis.manipal.edu/image.aspx?FileName=P170970008.jpg"> -->
 </body>
 </html>
