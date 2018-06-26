@@ -1,137 +1,232 @@
 <?php
     /**
-     * @package criteria
-     * @author Mohammed Adil Taj
-     * @version 0.1 | Created Thursday 18th Jun 2018 12:26 PM
-     */
+    * @package Criteria
+    * @author Mohd Adil Taj, Elvin Shawn DSouza
+    * @version 0.3 | Created Monday 22nd Jun 2018 12:26 PM
+    */
 
-    require_once 'db.php';
+   require_once 'db.php';
 
     class Criteria{
-
-        private $statementUpdate;
-        private $statementRetrieve;
-        private $statementInsert;
-
-        public $data = array();
+        public $c_id;
+        public $heading;
+        public $description;
+        public $part;
+        public $eval_level;
+        public $isSubCriteria;
+        public $parent_id;
+        public $numChildren;
+        public $data=array();
 
         private $connection;
-        /** Constructor
-         *  @param e_id employee id, -1 for a default container
-         */
-        function __construct($c_id = "-1"){
 
-            // attempt a database connection
-            if($c_id == "-1")
-              {  // default data
 
+        function __construct($c_id=-1, $use_scores = false, $f_id=-1){
             try{
-
                 $db = new MyConnection();
                 $this->connection = $db->getConnection();
-
-                // Initialise frequently used queries as prepared statements
-                $this->initQueries();
-
             }
-            catch (Exception $e){
-                echo "MySQL Connection Failed";
+            catch(Exception $e){
+                echo "Error: Unable to establish a connection with the database server";
+                return;
             }
-            // if the emmployee id is -1 create a container employee
+            if($c_id != -1){
 
-
-              }
-            else // if not check if employee exists and then retrieve
-            {
-                // Retrieve data from the employee id
-                $this->data['c_id'] = $c_id;
-                $result = $this->connection->query("SELECT * FROM criteria WHERE c_id = '{$this->data['c_id']}'");
-                if($result && $result->num_rows == 1){
-
-                    $this->data = $result->fetch_assoc();
+                $result = $this->connection->query("SELECT * FROM criteria WHERE c_id = {$c_id}");
+                if($result && $result->num_rows >= 1){
+                    $row = $result->fetch_assoc();
+                    $this->data = $row;
                 }
-                else{
-                    echo "Cannot Retrieve";
+                if($this->data['numChildren'] > 0){
+                    $result = $this->connection->query("SELECT c_id FROM criteria WHERE parent_id = {$c_id}");
+                    if($result && $result->num_rows >= 1){
+                        while($row = $result->fetch_assoc()){
+                            if($use_scores)
+                                $child = new Criteria($row['c_id'],true,$f_id);
+                            else
+                                $child = new Criteria($row['c_id']);
+                            $this->data['children'][] = $child->data;
+                        }
+                    }
+                }
+                else {
+                    $points;
+                    if($use_scores == true){
+
+                        $points = Score::AppraisalFormCriteriaScore($c_id, $f_id);
+                        // echo "<br/>";
+                        if($points != false){
+                           $this->data['s_id'] = $points->s_id;
+                           $this->data['value'] = $points->score;
+                        }
+                    }
+                    else {
+                        $this->data['value'] = 0;
+                        // $this->data['s_id'] = $points->score;
+                    }
                 }
             }
         }
-         /** Add Function
-         *  @param dataArray Array containing all staff information
-         */
+
         function add($dataArray){
-                $this->data = $dataArray;
-                //print_r($this->data);
-                $this->statementInsert->bind_param("issiiiii", $this->data['c_id'], $this->data['heading'], $this->data['description'], $this->data['part'], $this->data['eval_level'],$this->data['isSubCriteria'], $this->data['parent_id'],$this->data['numChildren']);
 
-                $r = $this->statementInsert->execute();
-                
-                echo "hello4";
-                if($r>0)
-                {
-
-                  echo "hello4";
-                    return 1;
-                  }
-                else
-                    return $this->statementInsert->errno;
+            $this->data = $dataArray;
+            $stmt = $this->connection->prepare("INSERT INTO criteria (c_id,heading, description, part,eval_level,isSubCriteria,parent_id,numChildren, max_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)");
+            $stmt->bind_param("issiiiiii",$this->data['c_id'], $this->data['heading'], $this->data['description'], $this->data['part'], $this->data['eval_level'],$this->data['isSubCriteria'], $this->data['parent_id'],$this->data['numChildren'], $this->data['max_points']);
+            if($stmt->execute()){
+                return $this->connection->insert_id;
+            }
+            else {
+                echo $stmt->error;
+                return 0;
+            }
         }
-
-        function exists(){
-            $qry = "SELECT * FROM criteria WHERE c_id = '{$this->c_id}'";
-            $result = $connection->query($qry);
-            if ($result && $result->num_rows == 1)
-                return true;
-            else
-                return false;
-        }
-
-        /** Update Function
-         *
-         */
-        function update(){
-            $this->statementUpdate->bind_param("issiiiii", $this->data['c_id'], $this->data['heading'], $this->data['description'], $this->data['part'], $this->data['eval_level'],$this->data['isSubCriteria'], $this->data['parent_id'],$this->data['numChildren']);
-            $r = $this->statementUpdate->execute();
-                if($r)
-                    return 1;
-                else
-                    return $this->statementUpdate->errno;
-        }
-
-        // One Function To prepare them all
-        function initQueries(){
-            // create Prepared Statements
-            $this->statementUpdate = $this->connection->prepare("UPDATE criteria SET
-                    `c_id` = ?,
+        function update($dataArray){
+          $this->data = $dataA;
+          $stmtUpdate = $this->connection->prepare("UPDATE criteria SET c_id = ?,
                     `heading` = ?,
                     `description` = ?,
                     `part` = ?,
                     `eval_level` = ?,
                     `isSubCriteria` = ?,
                     `parent_id` = ?,
-                    `numChildren` = ?");
+                    `max_points` = ?,
+                    `numChildren` = ? WHERE c_id=?");
 
-            $this->statementInsert = $this->connection->prepare("INSERT INTO criteria (
-                `c_id`,
-                `heading`, `description`, `part`,
-                `eval_level`, `isSubCriteria`,
-                `parent_id`,`numChildren`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            // one function to find them
-            $this->statementRetrieve = $this->connection->prepare("SELECT * FROM criteria
-                WHERE c_id = ?");
-            // In the Darkness Bind them
-            $this->statementUpdate->bind_param("issiiiii", $this->data['c_id'],$this->data['heading'], $this->data['description'], $this->data['part'], $this->data['eval_level'], $this->data['isSubCriteria'], $this->data['parent_id'], $this->data['numChildren']);
+            $stmtUpdate->bind_param("issiiiiiii", $this->data['c_id'], $this->data['heading'], $this->data['description'], $this->data['part'], $this->data['eval_level'],$this->data['isSubCriteria'], $this->data['parent_id'],$this->data['max_points'],$this->data['numChildren'],$this->data['c_id']);
 
-            $this->statementRetrieve->bind_param("s",$this->data['c_id']);
+            $r = $stmtUpdate->execute();
+            echo "hello";
+                if($r)
+                    return 1;
+                else
+                    return $this->stmtUpdate->errno;
+        }
 
-            // $this->statementInsert->bind_param("sissssiis", $this->data['e_id'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'],$this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id']);
+
+        function delete(){
+            $stmtDelete = $this->connection->prepare("DELETE FROM criteria WHERE c_id =?");
+            $stmtDelete->bind_param("i",$this->data['c_id']);
+            $result=$stmtDelete->execute();
+            if($result){
+                return true;
+            }
+            else return false;
+        }
+
+
+
+        function display(){
+            echo "<br/>";
+            echo "Form ID: ", $this->data['c_id'];
+            echo "Employee ID: ", $this->data['heading'];
+            echo "Created On: ", $this->data['description'];
+
         }
 
         function __destruct(){
-            // destory connection object
-            unset($this->connection);
+//  unset($this->connection);
         }
+    }
+?>
+
+
+<?php
+
+    /**
+     * @package Score
+     * @author Elvin Shawn D'souza
+     * @version 0.2 | Created Monday 23rd Jun 2018 12:26 PM
+     */
+    class Score{
+        public $s_id;
+        public $c_id;
+        public $f_id;
+        public $score;
+        public $create_table = "CREATE TABLE IF NOT EXISTS score (
+            s_id INT(10) PRIMARY KEY AUTO_INCREMENT,
+            f_id INT(3),
+            c_id INT(3),
+            score DECIMAL(4,2),
+            FOREIGN KEY (f_id) REFERENCES form (f_id) ON DELETE CASCADE,
+            FOREIGN KEY (c_id) REFERENCES criteria(c_id) ON DELETE CASCADE)";
+        private $connection;
+        function __construct($s_id = -1){
+            $db = new MyConnection();
+            $this->connection = $db->getConnection();
+            $this->connection->query($this->create_table);
+            if($s_id == -1){
+
+                $this->s_id = -1;
+                $this->f_id = -1;
+                $this->c_id = -1;
+                $this->score = 0;
+
+            }
+            else{
+                // TODO: Convert to prepared Statementns
+                $result = $this->connection->query("SELECT * FROM score WHERE s_id = {$s_id}");
+                if($result && $result->num_rows == 1){
+                    $row = $result->fetch_assoc();
+                    $this->s_id = $row['s_id'];
+                    $this->c_id = $row['c_id'];
+                    $this->f_id = $row['f_id'];
+                    $this->score = $row['score'];
+                }
+                else {
+                    $this->score = 0;
+                }
+            }
+
+        }
+
+        static function AppraisalFormCriteriaScore($criteria_id, $form_id){
+            $db = new MyConnection();
+            $c = $db->getConnection();
+            $result = $c->query("SELECT s_id FROM score WHERE c_id = {$criteria_id} AND f_id = {$form_id}");
+                if($result && $result->num_rows == 1){
+                    $row = $result->fetch_assoc();
+                    return new Score($row['s_id']);
+                }
+                else return false;
+        }
+
+        function __destruct(){
+
+        }
+
     }
 
 
+    //  PARTS
+
+    const FORM_PART_A = 1;
+    const FORM_PART_B1 = 2;
+    const FORM_PART_B2 = 3;
+    const FORM_PART_B3 = 4;
+
+    /**
+     * Function getFormPart
+     * Gets the form's criteria as an array of objects given the form id and the partition id
+     *
+     */
+    function getFormPart($form_id, $part = FORM_PART_A){
+        $output = array();
+        $db = new MyConnection();
+        $con = $db->getConnection();
+        $result = $con->query("SELECT * FROM criteria WHERE part = {$part} AND isSubCriteria <> 1");
+        if($result && $result->num_rows){
+            while($row = $result->fetch_assoc()){
+                 $temp =  new Criteria($row['c_id'],true,$form_id);
+                $output[] = $temp->data;
+            }
+
+        }
+        return $output;
+    }
+
+    function getForm($form_id){
+
+    }
 
 ?>
