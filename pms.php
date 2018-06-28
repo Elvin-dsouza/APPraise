@@ -138,7 +138,9 @@
             }
             document.getElementById("appraisal-elements").innerHTML="";
             loadForm('MAHE00009',$part);
-            activeTab($obj);
+			activeTab($obj);
+			saveIndicatorActivate();
+			saveAllFields();
         }
 		 var saveButton = document.getElementById("saveButton"); 
 

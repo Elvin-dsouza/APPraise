@@ -86,7 +86,9 @@ function inflateCriteriaFromObject(parent, criteriaObject) {
 		criteriaInput.setAttribute('data-cid', criteriaObject.c_id);
 		container.append(criteriaInput);
 		let inputField = container.getElementsByTagName("input");
-		inputField[0].addEventListener("blur", saveField());
+		inputField[0].onblur = function(){
+			saveField(this);
+		}
 	}
 	// append the container div to the parent element
 	container.append(childContainer);
@@ -139,7 +141,7 @@ function inflateCriteriaFromObjectAsTable(parent, criteriaObject) {
 		parentRow.append(criteriaInput);
 		let inputField = parentRow.getElementsByTagName("input");
 		inputField[0].onblur = function(){
-			saveField();
+			saveField(this);
 		}
 	}
 	// append the container div to the parent element
@@ -149,7 +151,7 @@ function inflateCriteriaFromObjectAsTable(parent, criteriaObject) {
 
 }
 function saveAllFields(){
-	console.log("test");
+	// console.log("test");
 	let values = document.getElementsByClassName("c_input_item");
 	let scores = [];
 	for (let i = 0; i < values.length; i++) {
@@ -180,22 +182,28 @@ function saveAllFields(){
 	xmlhttp.open("POST","handler/save_form.php",true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	// TODO:send form details and the value of the field
-	xmlhttp.send("json="+JSON.stringify(scores)+"&f_id="+"x");
+	xmlhttp.send("json="+JSON.stringify(scores));
 	
 }
 
-function saveField(){
-	// let xmlhttp = new XMLHttpRequest();
-	// xmlhttp.onreadystatechange = function(){
-	// 	if(this.readyState == 4 && this.status == 200){
-	// 		// TODO: handle response
-	// 	}
-	// 	// TODO: handle errors
-	// }
-	// xmlhttp.open("POST","",true);
-	// xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+function saveField(obj){
+	
+	// TODO: last validation
+	saveIndicatorActivate();
+	let score_id = obj.dataset.sid;
+	let criteria_id = obj.dataset.cid;
+	let val = obj.value;
+	let xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
+			saveIndicatorComplete();
+		}
+		// TODO: handle errors
+	}
+	xmlhttp.open("POST", "handler/save_form_field.php", true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	// TODO:send form details and the value of the field
-	// xmlhttp.send("json="+JSON.stringify());
+	xmlhttp.send("s_id="+score_id+"&c_id="+criteria_id+"&value="+val);
 }
 
 

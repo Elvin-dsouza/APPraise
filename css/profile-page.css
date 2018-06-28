@@ -94,16 +94,20 @@
 
     }
 
-        header{
+    body.normal{
+        display: block;
+    }
+
+        body > header{
             font-size:2em;
             text-align: center;
         }
 
-        header > h1{
+        body > header > h1{
             font-size:2.1em;
             font-weight:500;
         }
-        header > h3{
+        body > header > h3{
             font-size:1.5em;
             font-weight:300;
         }
@@ -170,7 +174,7 @@
         appearance: none;
     }
 
-    input[type="text"], input[type="password"], input[type="email"]
+    input[type="text"], input[type="password"], input[type="email"], input[type="number"]
     {
         background:white;
         margin-top:10px;
@@ -187,22 +191,31 @@
         /* margin-top:10px; */
         flex:1;
         /* margin-right:10px; */
-        font-size:2em;
+        /* font-size:2em; */
         border-radius: 3px;
         border:0;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         padding:10px;
     }
     /*buttons*/
-
+.tab-container{
+	display: flex;
+	justify-content: flex-end;
+	align-items:center;
+}
 .tab{
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	background:white;
-	/* margin:10px; */
-	color:#3F51B5;
+    /* margin:10px; */
+    color:lightgrey;
+    
+	/* color:#3F51B5; */
 	border-radius: 50px;
 	padding:10px 20px;
 	cursor: pointer;
+}
+.active-tab{
+    color:#3F51B5;
 }
 select{
 	background:white;
@@ -296,9 +309,98 @@ select{
     top:0px; 
     left:0px;
     margin-left:0px;
-    transition:all 3s;
+    transition:all 1s ease-out;
 }
 
 .step-two{
     margin-left:-100vw;
+}
+
+.queue > header{
+    justify-content: space-between;
+    margin-bottom:20px;
+}
+
+.queue > header > h3{
+    font-size:3em;
+    font-weight:400;
+}
+
+.queue > header > .tab-container > .tab{
+    margin:0 10px;
+    font-size:1em;
+}
+
+.number{
+    /* width:30px; */
+    /* height:30px; */
+    /* flex:none; */
+    /* background:grey; */
+    color:grey;
+    border-radius:50%;
+}
+.queue{
+    margin:0 5%;
+}
+
+.list-view{
+    display:flex;
+    flex-flow:column;
+
+}
+
+.list-view > .list-item{
+    background:white;
+    border-radius:10px;
+    margin-top:10px;
+    /* min-height:150px; */
+    color:#333;
+    padding:10px 40px;
+    
+}
+
+.list-item > header{
+
+}
+
+.list-item > header > h3{
+    font-size:2em;
+    font-weight:400;
+    margin-top:5px;
+    margin-bottom:0px;
+}
+
+.list-item > header > p{
+    font-size:1.3em;
+    font-style: italic;
+    color:darkgray;
+    margin:10px 0px;
+}
+
+.list-item > header > p.empid{
+    font-size:0.8em;
+    color:#3F51B5;
+    margin:5px 0px;
+    font-style: normal;
+}
+
+
+.search-bar{
+    display:flex;
+    align-items: center;
+
+}
+
+.search-icon{
+    fill:white;
+    width:30px;
+    height:30px;
+}
+
+#searchText{
+    background:transparent;
+    box-shadow:none;
+    width:100%;
+    font-size:1em;
+    margin-top:0px;
 }
