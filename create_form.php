@@ -4,6 +4,26 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/modernflex.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+
+			.add-form-children{
+				margin-left:30px;
+			}
+
+			.add-criteria-row{
+				border-left:3px solid lightblue;
+				padding:20px;
+
+			}
+
+			.buttonAddChild{
+				justify-content: flex-start;
+				align-items: flex-start;
+				max-width:200px;
+				margin:0;
+			}
+
+	</style>
 </head>
 <body >
 	<svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -54,58 +74,158 @@
 				</svg>
 				<p class="save-status"> Last Saved, 20/11/1996 3:45 PM</p>
 			</div>
-			<div class="tab-container" style="margin-right:10%">
-				<div class="tab active-tab">Personal Info</div>
-				<div class="tab" data-part="1">A</div>
-				<div class="tab" data-part="2">B2</div>
-				<div class="tab" data-part="3">B1</div>
-				<div class="tab" data-part="4">B3</div>
-				
+			<div class="tab-container" id="partSelector" style="margin-right:10%">
+				<div class="tab active-tab" onclick="changeForm(this,1)">Personal Info</div>
+				<div class="tab" data-part="1" onclick="changeForm(this,2)">A</div>
+				<div class="tab" data-part="2" onclick="changeForm(this,3)">B2</div>
+				<div class="tab" data-part="3" onclick="changeForm(this,4)">B1</div>
+				<div class="tab" data-part="4" onclick="changeForm(this,5)">B3</div>
+
 			</div>
 		</div>
 	</div>
-	
-	<main class="container row center" style="max-width:85vw; margin:0 auto; margin-top:10px;" >
+
+	<main id="main" class="container row center" style="max-width:85vw; margin:0 auto; margin-top:10px;" >
 		<div class="appraisal-add-form" style="justify-content: space-between">
 			<h1 id="form-header">PART A: Teaching Info</h1>
 			<p id="form-max-points">MAX 50 Points</p>
 		</div>
 		<div id="appraisal-add-form">
-			<div class="container add-criteria row">
-				<span class="container col">
-					<input type="text" id="addHeading" placeholder = "Heading" class="c8">
-					<input type="number" id="addMax"  placeholder="Max Points" class="c1" style="margin-left:10px;">
-				</span>
+		<!--	<div class="container add-criteria row">
+				<input type="text" id="addHeading" placeholder = "Heading" class="c8">
+				<input type="number" id="addMax"  placeholder="Max Points" class="c1" style="margin-left:10px;">
 				<input type="text" id="addDescription" placeholder = "Criteria Description">
-				<div id="add-form-children" class="container row">
-					<div class="buttonAddChild container row center-vert">
-						<p class="tab">	+ Add Sub-Criteria </p>
-					</div>
-				</div>
+				<div class="container row add-form-children">-->
+					<!-- <div class="buttonAddChild container row center-vert" onclick="createNewCriteria()">
+						<p class="tab">	+ Add Criteria </p>
+					</div> -->
+				<!--</div>
 			</div>
-		</div>
+		</div>-->
+	</div>
+
+	<div class="buttonAddChild container row center-vert" onclick="sub()">
+		<p class="tab" style="color:blue">	SUBMIT </p>
+	</div>
 	</main>
 	<script>
+		let Part;
 
-		function addNewCriteria(){
-			let sendobject = {};
-			let addForm = document.getElementById("appraisal-add-form");
-			let criteria = addForm.getElementsByClassName("add-criteria");
-			// TODO: handle a single criteria without any other sub criteria
-			let cHeading = criteria[0].getElementById("addHeading"); 
-			let cDescription = criteria[0].getElementById("addDescription"); 
-			let cMaxPoints = criteria[0].getElementById("addMax");  
-			sendObject.heading = cHeading;
-			sendObject.description = cDescription;
-			sendObject.max_points = cMaxPoints;
-			sendObject.isSubCriteria = 0;
-			sendObject.parent = null;
-			sendObject.eval_level = null;
-			sendObject.part = 1;
-			sendObject.children = criteria.length() - 1;
+		function changeForm($obj,$part){
+			Part=$part;
+			activeTab($obj);
+
+			let parent= document.getElementsByClassName("appraisal-add-form")[0];
+			parent.remove(parent);
+			let main=document.getElementById('main');
+			let parentContainer = document.createElement("div");
+			parentContainer.className="appraisal-add-form";
+			parentContainer.style="justify-content: space-between";
+			parentContainer.innerHTML="	<h1 id='form-header'>PART A: Teaching Info</h1>"+
+				"<p id='form-max-points'>MAX 50 Points</p>"+
+			"<div id='appraisal-add-form'><div id='appraisal-add-form'></div>"
+			main.append(parentContainer);
+			let parent1 = document.getElementsByClassName("appraisal-add-form")[0];
+			createCriteriaForm(parent1);
 		}
 
-		
+		let parentContainer = document.getElementsByClassName("appraisal-add-form")[0];
+		createCriteriaForm(parentContainer);
+
+		function createNewCriteria(c){
+			createCriteriaForm(c);
+
+		}
+		function activeTab($obj){
+				let partSelector = document.getElementById("partSelector");
+				let tabs = partSelector.getElementsByClassName("tab");
+				for (let i = 0; i < tabs.length; i++) {
+						const element = tabs[i];
+						tabs[i].className="tab";
+				}
+				$obj.className = "tab active-tab";
+
+		}
+		function createCriteriaForm(parent){
+			let container = document.createElement("div");
+			container.className = "add-criteria-row";
+			container.style.order=1;
+			let iHeading = document.createElement("input");
+			iHeading.className = "dHeading";
+			iHeading.placeholder="Heading";
+			let iMax = document.createElement("input");
+			iMax.className="dMax";
+			iMax.placeholder="Max Points";
+			let iDesc = document.createElement("input");
+			iDesc.className="dDesc";
+			iDesc.placeholder="Criteria Description";
+			container.append(iHeading);
+			container.append(iMax);
+			container.append(iDesc);
+			let childContainer = document.createElement("div")
+			childContainer.className ="add-form-children container row";
+			let addButtonContainer = document.createElement("div");
+			addButtonContainer.className = "buttonAddChild container row center-vert";
+			addButtonContainer.style.order = 2;
+			addButtonContainer.onclick = function(){
+				createNewCriteria(childContainer);
+			}
+			addButtonContainer.innerHTML = "<p class='tab'> <span style='color:blue'>+</span> add Criteria </p>";
+			childContainer.append(addButtonContainer);
+			container.append(childContainer);
+			parent.append(container);
+
+		}
+
+
+		function sub(){
+			let parent = document.getElementsByClassName("appraisal-add-form")[0];
+			let output_array = retrieve(parent);
+			console.log(JSON.stringify(output_array));
+		}
+		//let count = 0;
+			function retrieve(parent){
+				let temp = {};
+				//count++;
+				temp.heading = parent.getElementsByClassName("dHeading")[0].value;
+				temp.max = parent.getElementsByClassName("dMax")[0].value;
+				temp.description = parent.getElementsByClassName("dDesc")[0].value;
+				temp.part = Part;
+				let child = parent.getElementsByClassName("add-form-children")[0];
+				console.log(parent);
+				let clen= child.children.length-1;
+				temp.numChildren = clen;
+				if (clen==0)
+				{
+					temp.children = [];
+					return temp;
+				}
+				let cArray = [];
+				for(let i=1;i<clen+1;i++){
+							let tempOutput = retrieve(child.children[i]);
+							cArray.push(tempOutput);
+					}
+				temp.children = cArray;
+				return temp;
+			}
+
+			function sendCriteria(jobj){
+				let xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function(){
+					if(this.readyState == 4 && this.status == 200){
+						let output = JSON.parse(this.responseText);
+						if(output.status == 1){
+							alert("YAAAY");
+						}
+						else {
+							alert("AWWWWW");
+						}
+					}
+				}
+				xhttp.open("POST","handler/add_criteria.php",true);
+				xhttp.send("json="+JSON.stringify(jobj));
+			}
+
 
 	</script>
 </body>
