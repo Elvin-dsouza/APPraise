@@ -75,11 +75,10 @@
 				<p class="save-status"> Last Saved, 20/11/1996 3:45 PM</p>
 			</div>
 			<div class="tab-container" id="partSelector" style="margin-right:10%">
-				<div class="tab active-tab" onclick="changeForm(this,1)">Personal Info</div>
-				<div class="tab" data-part="1" onclick="changeForm(this,2)">A</div>
-				<div class="tab" data-part="2" onclick="changeForm(this,3)">B2</div>
-				<div class="tab" data-part="3" onclick="changeForm(this,4)">B1</div>
-				<div class="tab" data-part="4" onclick="changeForm(this,5)">B3</div>
+				<div class="tab active-tab" onclick="changeForm(this,1)">A</div>
+				<div class="tab" data-part="2" onclick="changeForm(this,2)">B2</div>
+				<div class="tab" data-part="3" onclick="changeForm(this,3)">B1</div>
+				<div class="tab" data-part="4" onclick="changeForm(this,4)">B3</div>
 
 			</div>
 		</div>
@@ -109,25 +108,25 @@
 	</div>
 	</main>
 	<script>
-		let Part;
+		let Part = 1;
 
-		function changeForm($obj,$part){
-			Part=$part;
-			activeTab($obj);
+		// function changeForm($obj,$part){
+		// 	Part=$part;
+		// 	activeTab($obj);
 
-			let parent= document.getElementsByClassName("appraisal-add-form")[0];
-			parent.remove(parent);
-			let main=document.getElementById('main');
-			let parentContainer = document.createElement("div");
-			parentContainer.className="appraisal-add-form";
-			parentContainer.style="justify-content: space-between";
-			parentContainer.innerHTML="	<h1 id='form-header'>PART A: Teaching Info</h1>"+
-				"<p id='form-max-points'>MAX 50 Points</p>"+
-			"<div id='appraisal-add-form'><div id='appraisal-add-form'></div>"
-			main.append(parentContainer);
-			let parent1 = document.getElementsByClassName("appraisal-add-form")[0];
-			createCriteriaForm(parent1);
-		}
+		// 	let parent= document.getElementsByClassName("appraisal-add-form")[0];
+		// 	parent.remove(parent);
+		// 	let main=document.getElementById('main');
+		// 	let parentContainer = document.createElement("div");
+		// 	parentContainer.className="appraisal-add-form";
+		// 	parentContainer.style="justify-content: space-between";
+		// 	parentContainer.innerHTML="	<h1 id='form-header'>PART A: Teaching Info</h1>"+
+		// 		"<p id='form-max-points'>MAX 50 Points</p>"+
+		// 	"<div id='appraisal-add-form'><div id='appraisal-add-form'></div>"
+		// 	main.append(parentContainer);
+		// 	let parent1 = document.getElementsByClassName("appraisal-add-form")[0];
+		// 	createCriteriaForm(parent1);
+		// }
 
 		let parentContainer = document.getElementsByClassName("appraisal-add-form")[0];
 		createCriteriaForm(parentContainer);
@@ -136,6 +135,31 @@
 			createCriteriaForm(c);
 
 		}
+
+		  function changeForm($obj,$p){
+            let FORM_PART_A_HEADING = "PART A: Teaching Support";
+            let FORM_PART_B1_HEADING = "PART B1: Research Accomplishments";
+            let FORM_PART_B2_HEADING = "PART B2: Professional Accomplishments";
+            let FORM_PART_B3_HEADING = "PART B3: Administrative and Other Activities";
+            let hding = document.getElementById("form-header");
+            switch ($p) {
+                case 1:
+                    hding.innerHTML = FORM_PART_A_HEADING;
+                    break;
+                case 2:
+                    hding.innerHTML = FORM_PART_B1_HEADING;
+                    break;
+                case 3:
+                    hding.innerHTML = FORM_PART_B2_HEADING;
+                    break;
+                case 4:
+                    hding.innerHTML = FORM_PART_B3_HEADING;
+                    break;
+            }
+			activeTab($obj);
+			Part = $p;
+		}
+		
 		function activeTab($obj){
 				let partSelector = document.getElementById("partSelector");
 				let tabs = partSelector.getElementsByClassName("tab");
@@ -146,6 +170,7 @@
 				$obj.className = "tab active-tab";
 
 		}
+
 		function createCriteriaForm(parent){
 			let container = document.createElement("div");
 			container.className = "add-criteria-row";
@@ -181,7 +206,8 @@
 		function sub(){
 			let parent = document.getElementsByClassName("appraisal-add-form")[0];
 			let output_array = retrieve(parent);
-			console.log(JSON.stringify(output_array));
+			sendCriteria(output_array);
+			// console.log(JSON.stringify(output_array));
 		}
 		//let count = 0;
 			function retrieve(parent){
@@ -191,6 +217,7 @@
 				temp.max = parent.getElementsByClassName("dMax")[0].value;
 				temp.description = parent.getElementsByClassName("dDesc")[0].value;
 				temp.part = Part;
+				temp.isSubCriteria = 0;
 				let child = parent.getElementsByClassName("add-form-children")[0];
 				console.log(parent);
 				let clen= child.children.length-1;
@@ -203,6 +230,7 @@
 				let cArray = [];
 				for(let i=1;i<clen+1;i++){
 							let tempOutput = retrieve(child.children[i]);
+							tempOutput.isSubCriteria = 1;
 							cArray.push(tempOutput);
 					}
 				temp.children = cArray;
@@ -223,6 +251,7 @@
 					}
 				}
 				xhttp.open("POST","handler/add_criteria.php",true);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhttp.send("json="+JSON.stringify(jobj));
 			}
 

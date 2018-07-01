@@ -11,7 +11,7 @@
     }
     // $f_id = $_REQUEST['f_id'];
   
-    echo $count;
+    // echo $count;
     
    
 

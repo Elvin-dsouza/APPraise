@@ -51,14 +51,14 @@ class Stack
 
 
 
-        $si;
+        $childStack;
         $connection;
         $c_id;
         $rc_id;
         $a=array();
 
         
-        function abc($data)
+        function addCriteriaFromObject($data)
         {
             $db = new MyConnection();
             $connection = $db->getConnection();
@@ -85,7 +85,7 @@ class Stack
             add($data,$childStack);
         }
 
-        function add($data,$si)
+        function add($data,$childStack)
         {
             $db = new MyConnection();
             $connection = $db->getConnection();
