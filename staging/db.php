@@ -10,7 +10,7 @@
         private $hostname = "localhost";
         private $user_name = "root";
         private $password = "";
-        private $database_name = "Appraise";
+        private $database_name = "appnotraise";
 
        private $table_eval = "CREATE TABLE IF NOT EXISTS eval(
             eval_level INT(3) PRIMARY KEY AUTO_INCREMENT,
@@ -72,7 +72,6 @@
             FOREIGN KEY (f_id) REFERENCES form (f_id) ON DELETE CASCADE,
             FOREIGN KEY (c_id) REFERENCES criteria(c_id) ON DELETE CASCADE)";
 
-
         public $table_cumulative="CREATE TABLE IF NOT EXISTS cumulative (
             r_id INT(5) PRIMARY KEY AUTO_INCREMENT,
             f_id INT(3),
@@ -99,6 +98,7 @@
             n_objective VARCHAR(512),
             year INT(4),
             FOREIGN KEY (e_id) REFERENCES staff(e_id) ON DELETE CASCADE)";
+
 
         private $con;
 
