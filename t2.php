@@ -40,13 +40,21 @@
     // print_r($re);
 
     //to list the forms of the particular department
-    $data= array();
-    $data=list_forms(1);
-    //print_r($data);
-    if(count($data)>0){ //returns the number of elements in an array
-      echo JSON_encode($data);
-    }
-    else {
-      echo "No records found!!";
-    }
+    // $data= array();
+    // $data=list_forms(1);
+    // //print_r($data);
+    // if(count($data)>0){ //returns the number of elements in an array
+    //   echo JSON_encode($data);
+    // }
+    // else {
+    //   echo "No records found!!";
+    // }
+
+    $user = new Users();
+    $data = array();
+    $data['e_id'] = 'MAHE00001';
+    $data['email'] = 'esdsouza@gmail.com';
+    $data['password'] = 'helloworld';
+    $id = $user->add($data);
+    echo $id;
 ?>

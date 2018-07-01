@@ -16,7 +16,7 @@
                 echo "Error!!!!";
                 return;
             }
-            if($f_id != -1){
+            if($e_id != -1){
 
                 $result = $this->connection->query("SELECT * FROM form WHERE e_id = '{$e_id}'");
                 if($result && $result->num_rows >= 1){

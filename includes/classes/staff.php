@@ -40,6 +40,7 @@
                 'qualification' => 'na',
                 'designation' => '1-1-1970',
                 'age' => 0,
+                'image' => '',
                 'pfno' => 000, 'superior_id' => 'MAHE00000');
             else // if not check if employee exists and then retrieve
             {
@@ -60,8 +61,8 @@
          */
         function add($dataArray){
                 $this->data = $dataArray;
-                print_r($this->data);
-                $this->statementInsert->bind_param("ssissssiis", $this->data['e_id'], $this->data['name'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'],$this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id']);
+                // print_r($this->data);
+                $this->statementInsert->bind_param("ssissssiiss", $this->data['e_id'], $this->data['name'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'],$this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id'], $this->data['image']);
                 $r = $this->statementInsert->execute();
                 if($r)
                     return 1;
@@ -99,7 +100,7 @@
                 `e_id`, `name`,
                 `dept_id`, `dob`, `doj`,
                 `qualification`, `designation`,
-                `age`,`pfno`, `superior_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
+                `age`,`pfno`, `superior_id`, `image`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
             // one function to find them
             $this->statementRetrieve = $this->connection->prepare("SELECT * FROM staff
                 WHERE e_id = ?");

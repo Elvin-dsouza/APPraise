@@ -98,10 +98,18 @@
             logoutButton.onclick = function () {
                 window.location = "logout.php";
             }
-
+            let createForm = document.getElementById("createForm");
+            if(createForm !== null){
+                createForm.onclick = function () {
+                    window.location = "handler/create_form.php";
+                }
+            }
+           
             let openForm = document.getElementById("openForm");
-            openForm.onclick = function () {
-                window.location = "pms.php?f_id="+openForm.dataset.fid;
+            if(openForm !== null){
+                openForm.onclick = function () {
+                    window.location = "pms.php?f_id="+openForm.dataset.fid;
+                }
             }
             
         </script>

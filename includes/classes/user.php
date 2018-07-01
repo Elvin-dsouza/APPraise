@@ -88,9 +88,8 @@
             $this->statementUpdate = $this->connection->prepare("UPDATE user SET e_id = ?,
             email = ?,
             password = ? WHERE u_id = ?");
-
             $out = $this->statementUpdate->bind_param("sssi",$this->data['e_id'], $this->data['email'], $this->data['password'], $this->data['u_id']);
-            print_r($out);
+            // print_r($out);
             $this->statementInsert = $this->connection->prepare("INSERT INTO user (
                 `e_id`, `email`,
                 `password`) VALUES (?, ?, ?)");
