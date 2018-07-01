@@ -6,10 +6,10 @@ const fieldSaveHandlerScript = "";
  * Inflate Criteria.
  * Function to inflate each criteria of the appraisal Form.
  * @param {Object} parent the DOM element to inflate in
- * @param {String} heading the heading to inflate 
+ * @param {String} heading the heading to inflate
  * @param {String} description the criteria Description
  * @param {Number} max_points the max number to allow in the input element
- * 
+ *
  * @author Elvin Shawn Dsouza
  */
 
@@ -49,7 +49,7 @@ function inflateCriteria(parent, heading, description, max_points, formValue = "
 
 
 function inflateCriteriaFromObject(parent, criteriaObject) {
-	
+
 	let container = document.createElement("div"); // create a container div element
 	let childContainer = document.createElement("div");
 
@@ -93,7 +93,7 @@ function inflateCriteriaFromObject(parent, criteriaObject) {
 	// append the container div to the parent element
 	container.append(childContainer);
 	parent.append(container);
-	
+
 }
 
 
@@ -105,7 +105,7 @@ function inflateCriteriaFromObjectAsTable(parent, criteriaObject) {
 	let childRowContainer = document.createElement("td");
 	let parentRow = document.createElement("div");
 	let childRow = document.createElement("div");
-	container.className = "appraisal-criteria"; 
+	container.className = "appraisal-criteria";
 	parentRow.className = "appraisal-criteria"; // give the container a classname
 	childRow.className = "app-child-container"; // give the container a classname
 	parentRowContainer.append(parentRow);
@@ -167,14 +167,14 @@ function saveAllFields(){
 			tempObj.s_id = values[i].dataset.sid;
 			tempObj.c_id = values[i].dataset.cid;
 			tempObj.value = values[i].value;
-			
+
 		}
 		scores.push(tempObj)
 	}
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
-			
+
 			saveIndicatorComplete();
 		}
 		// TODO: handle errors
@@ -182,6 +182,7 @@ function saveAllFields(){
 	xmlhttp.open("POST","handler/save_form.php",true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	// TODO:send form details and the value of the field
+
 	xmlhttp.send("json="+JSON.stringify(scores));
 	
 }
@@ -228,15 +229,3 @@ function loadForm(e_id, formPart){
 	xhttp.send("e_id="+e_id+"&formPart="+formPart);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
