@@ -1,6 +1,7 @@
 <?php
     session_start();
-    require_once 'includes/classes/form.php';
+	require_once 'includes/classes/form.php';
+	$e_id= 0;
     if($_SESSION['loggedIn'] == 1){
         if(!isset($_GET['f_id']) || $_GET['f_id'] < 0){
             die("Error: Possible Attempt to Gain Unauthorised access, your IP has been logged and the administration has been notified.");
@@ -29,9 +30,13 @@
 	<link rel="stylesheet" type="text/css" href="css/modernflex.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body >
+<body data-eid=<?php echo "'".$e_id->e_id."'";?>>
 	<svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<defs>
+				<symbol id="icon-arrow_back" viewBox="0 0 24 24">
+					<title>arrow_back</title>
+					<path d="M20.016 11.016v1.969h-12.188l5.578 5.625-1.406 1.406-8.016-8.016 8.016-8.016 1.406 1.406-5.578 5.625h12.188z"></path>
+				</symbol>
 				<symbol id="icon-exit_to_app" viewBox="0 0 24 24">
 					<title>exit_to_app</title>
 					<path d="M18.984 21c1.078 0 2.016-0.938 2.016-2.016v-13.969c0-1.078-0.938-2.016-2.016-2.016h-13.969c-1.125 0-2.016 0.938-2.016 2.016v3.984h2.016v-3.984h13.969v13.969h-13.969v-3.984h-2.016v3.984c0 1.078 0.891 2.016 2.016 2.016h13.969zM10.078 8.391l2.578 2.625h-9.656v1.969h9.656l-2.578 2.625 1.406 1.406 5.016-5.016-5.016-5.016z"></path>
@@ -56,7 +61,7 @@
 			<div class="container col" style="justify-content: space-between;">
 				<div class="container center-vert">
 					<svg class="icon">
-						<use xlink:href="#icon-menu"></use>
+						<use xlink:href="#icon-arrow_back"></use>
 					</svg>
 					<h1 class="inline-head">AppRaise</h1>
 				</div>
@@ -99,11 +104,12 @@
 	<script src="js/save_indicator.js"></script>
 	<script src = "js/pms.js"></script>
 	<script>
-        
+		let b = document.getElementsByTagName("body")[0];
+		let employee_id = b.dataset.eid;
 		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
 		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
 		// inflateCriteria(document.getElementById("appraisal-elements"),"Test", "Description",10);
-        loadForm('MAHE00009',1);
+        loadForm(employee_id,1);
         
         function activeTab($obj){
             let partSelector = document.getElementById("partSelector");
@@ -137,8 +143,10 @@
                     break;
             }
             document.getElementById("appraisal-elements").innerHTML="";
-            loadForm('MAHE00009',$part);
-            activeTab($obj);
+            loadForm(employee_id,$part);
+			activeTab($obj);
+			saveIndicatorActivate();
+			saveAllFields();
         }
 		 var saveButton = document.getElementById("saveButton"); 
 

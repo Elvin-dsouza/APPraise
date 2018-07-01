@@ -41,6 +41,7 @@
     // print_r($re);
 
     //to list the forms of the particular department
+
     $data= array();
     $data=list_forms(2);
     $data=list_forms(1);
@@ -51,4 +52,15 @@
     else {
       echo "No records found!!";
     }
+
+    // $data= array();
+    // $data=list_forms(1);
+    // //print_r($data);
+    // if(count($data)>0){ //returns the number of elements in an array
+    //   echo JSON_encode($data);
+    // }
+    // else {
+    //   echo "No records found!!";
+    // }
+
 ?>

@@ -3,19 +3,30 @@
 <head>
 	<title>MIT Appraise</title>
 	<link rel="stylesheet" type="text/css" href="css/profile-page.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        input[type="text"], input[type="number"]{
+            padding:10px;
+            font-size:1em;
+        }
+        select{
+            padding:10px;
+            font-size:1em;
+        }
+    </style>
 </head>
 <body>
+    
     <div style="position:relative; width:100vw; height:100vh; overflow:hidden;">
-        <div class="slider">
+        <div class="slider" >
             <div style="width:100vw; height:100vh; flex:none;" class="container row center-both" >
                 <div class="login-form container padding-20 row" style="max-height:300px;">
                     <h1> <span class="tab" >1</span> Login Information</h1>
-                    <input type="email" name="email" placeholder="example@example.com" id="email" required>
-                    <input type="password" name="password" placeholder="password" id="pass" required>
+                    <input type="email" name="email" placeholder="example@example.com" id="formEmail" required>
+                    <input type="password" name="password" placeholder="password" id="formPass" required>
                     <span class="container login-form col center-both">
-                    <button class="button">Register</button>
-                    <button onclick="window.location='signup'" class="button-inverse">Already Registered? Login in</button>
+                    <button class="button" onclick="nextStep()">Register</button>
+                    <button onclick="window.location='login.php'" class="button-inverse">Already Registered? Login in</button>
                     </span>
                 </div>
             </div>
@@ -24,93 +35,162 @@
                     <h1> <span class="tab" > 2</span> Employee Information</h1>
                         <span class="container row c9" style="margin-top:10px;">
                             <label>Employee Name</label>
-                            <input type="text" name="name" placeholder="Title.Firstname Lastname" id="name" required>
+                            <input type="text" name="name" placeholder="Title.Firstname Lastname" id="formName" required>
                         </span>
                          <span class="container row " style="margin-top:10px;">
                                 <label>Department</label>
-                                <select name="department" id="selectDepartment">
+                                <select name="department" id="formDepartment">
                                     <option value="-1">Select Department</option>
+                                    <option value="1">Computer Applications</option>
                                 </select>
                         </span>
                         <span class="container col" style="margin-top:10px; justify-content:space-between;">
                             <span class="container row c1">
                                 <label>Employee ID</label>
-                                <input type="text" name="employeeid" placeholder="MAHEXXXX" id="formEmployeeId"  required>
+                                <input type="text" name="employeeid" placeholder="MAHEXXXX" id="formEid"  required>
                             </span>
                            
                         </span>
                         <span class="container col" style="margin-top:10px; justify-content:space-between;">
                             <span class="container row">
                                 <label>Date Of Birth</label>
-                                <input type="date" name="dob" required>
+                                <input type="date" name="dob" id="formDOB" required>
                             </span>
                             <span class="container row c1" style="margin-left:10px;">
                                 <label>Date Of Joining</label>
-                                <input type="date" name="doj"  required>
+                                <input type="date" name="doj" id="formDOJ"  required>
                             </span>
                             <span class="container row c1" style="margin-left:10px;">
                                 <label>In Position Since</label>
-                                <input type="date" name="pos" required>
+                                <input type="date" name="pos" id="formPOS" required>
                             </span>
                         </span>
                         <span class="container row c9" style="margin-top:10px;">
                             <label>Designation</label>
-                            <input type="text" name="eid" placeholder="Designation" id="eid" required>
+                            <input type="text" name="eid" placeholder="Designation" id="formDesignation" required>
                         </span>
-                       <span class="container col" style="margin-top:10px; justify-content:space-between;">
-                            <span class="container row c9">
+                       <span class="container col" style="margin-top:10px;">
+                            <span class="container row c5">
                                 <label>Qualification</label>
-                                <input type="text" name="qualification" placeholder="qualification" required>
+                                <input type="text" name="qualification" placeholder="qualification" id="formQualification" style="width:50%;" required>
                             </span>
-                            <span class="container row c1" style="margin-left:10px;">
+                            <span class="container row c5" style="margin-left:10px;">
                                 <label>Age</label>
-                                <input type="Text" name="age" placeholder="Age"  required>
+                                <input type="number" name="age" placeholder="Age" style="width:50%;" id="formAge" required>
                             </span>
                             
                         </span>
-                        
+                        <span class="container col" style="margin-top:10px; justify-content:space-between;">
+                            
+                        </span>
                         <span class="container login-form col center-both">
-                        <button class="button">Register</button>
+                        <button class="button" id="sendRegistration">Register</button>
                         <button onclick="window.location='signup'" class="button-inverse">Already Registered? Login in</button>
                     </span>
                 </div>
             </div>
         </div>
     </div>
-	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
+    <div class="modal-container">
+        <div class="modal-display">
+            <div class="profile-confirm">
+                <h2></h2>
+                <p> We found Some of your details, please confirm this is you </p>
+                <img src="" alt="">
+                
+                <span class="container col" style="justify-content:space-between">
+                   
+                    <button class="button" style="color:red" onclick="stepTwoWithOutInfo()">No, This is not me</button>
+                    <button class="button" onclick="stepTwoWithInfo()">Yes, This is me</button>
+                </span>
+            </div>
+        </div>
+    </div>
 	<script>
-		  // Initialize Firebase
-		  var config = {
-		    apiKey: "AIzaSyBIuGZSdjW-jRuotqsjOrb5CTcJV8W5_Mo",
-		    authDomain: "appraisal-8ca4d.firebaseapp.com",
-		    databaseURL: "https://appraisal-8ca4d.firebaseio.com",
-		    projectId: "appraisal-8ca4d",
-		    storageBucket: "appraisal-8ca4d.appspot.com",
-		    messagingSenderId: "502189285093"
-		  };
-		  firebase.initializeApp(config);
-		  var db = firebase.firestore();
-		  function  register(){
-		  		var name = document.getElementById("name").value;
-		  		var eid = document.getElementById("eid").value;
-		  		var dept = document.getElementById("dept").value;
-		  		var designation = document.getElementById("designation").value;
-			  db.collection("staff").add({
-			  	"Name":name,
-			  	"Designation":designation,
-			  	"Department":dept,
-			  	"id":eid
-			  }).then(function(docRef){
-			  	if(docRef){
-			  		alert("successfully registered");
-			  	}
-			  	console.log(docRef);
-			  }).catch(function(error){
-			  	console.log(error);
-			  });
-		  }
+        let sendObject = {};
+        let retImage = "";
+        let retName = "";
+        let registrationForm = document.getElementById("sendRegistration");
+        registrationForm.onclick = function(){
+            sendObject.e_id = document.getElementById("formEid").value;
+            sendObject.password = document.getElementById("formPass").value;
+            sendObject.email = document.getElementById("formEmail").value;
+            let staff = {}
+            staff.e_id = document.getElementById("formEid").value;
+            staff.name = document.getElementById("formName").value;
+            staff.dept_id = document.getElementById("formDepartment").value;
+            staff.doj = document.getElementById("formDOJ").value;
+            staff.dob = document.getElementById("formDOB").value;
+            staff.pos = document.getElementById("formPOS").value;
+            staff.designation = document.getElementById("formDesignation").value;
+            staff.qualification = document.getElementById("formQualification").value;
+            staff.age = document.getElementById("formAge").value;
+            staff.image = retImage;
+            sendObject.staff = staff;
+
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    let promise = JSON.parse(this.responseText);
+                    if(promise.status == 1){
+                        alert("Succesfully Registered User, Please Login to Continue");
+                    }
+                    else{
+                        alert("An Unexpected Error Occoured, please Try again Later");
+                    }
+                }
+            }
+            console.log(JSON.stringify(sendObject));
+            xhttp.open("POST","handler/registration_handler.php",true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("json="+ JSON.stringify(sendObject)+"&e_id="+ sendObject.e_id+"&password="+ sendObject.password+ "&email="+sendObject.email);
+        }
+
+		function nextStep(){
+           let slider =  document.getElementsByClassName("slider")[0];
+           let xhttp = new XMLHttpRequest();
+           xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let json = JSON.parse(this.responseText);
+                    for (let i = 0; i < json.length; i++) {
+                        const profile = json[i];
+                        if(profile.email ==  document.getElementById("formEmail").value)
+                        {
+                            retImage = profile.image;
+                            retName = profile.name;
+                            showDisplayModal(retImage, retName);
+                        }     
+                    }  
+                }
+            }
+           xhttp.open("GET", "includes/mit_staff.json", true);
+           xhttp.send();
+        }
+        function stepTwoWithOutInfo(){
+            document.getElementsByClassName("modal-container")[0].style.display = "none";
+            // document.getElementById("formName").value=retName;
+            let slider = document.getElementsByClassName("slider")[0];
+            slider.className="slider step-two";
+        }
+
+        function stepTwoWithInfo(){
+            document.getElementsByClassName("modal-container")[0].style.display = "none";
+            document.getElementById("formName").value=retName;
+            let slider = document.getElementsByClassName("slider")[0];
+            slider.className="slider step-two";
+        }
+
+        function showDisplayModal(imgSrc,heading){
+            let modal = document.getElementsByClassName("modal-container")[0];
+            modal.style.display = "flex";
+            let displayModal = modal.getElementsByClassName("modal-display")[0];
+            displayModal.style.display = "flex";
+            let profileConfirm = displayModal.getElementsByClassName("profile-confirm")[0];
+            let img = profileConfirm.getElementsByTagName("img")[0];
+            img.src = imgSrc;
+            let head = profileConfirm.getElementsByTagName("h2")[0];
+            head.innerHTML = heading;
+        }
 	</script>
 </body>
 </html>

@@ -7,6 +7,7 @@
 
     require_once 'classes/db.php';
     require_once 'classes/staff.php';
+    require_once 'classes/user.php';
 
     /** Authentication Function
      *  @param employee_id
@@ -16,21 +17,18 @@
     function authenticate($employee_id, $password){
         $promise = array('status' => 1, 'error' => 'Invalid Password');
         $db = new MyConnection();
-        $password = "";
         $connection = $db->getConnection();
         $hashed = hash("sha512",$password,false);
-        // echo $hashed;
-        // $stmt = $connection->prepare("SELECT `password` FROM user WHERE `e_id` = ?");
-        // $stmt->bind_param("s", $employee_id);
-        // $stmt->execute();
-        // $stmt->bind_result($password);
-        $result = $connection->query("SELECT `password` FROM user WHERE e_id = '{$employee_id}'");
+        $result = $connection->query("SELECT `password`, `e_id` FROM user WHERE e_id = '{$employee_id}' OR email = '{$employee_id}'");
         if($result->num_rows > 0){
             $promise['status'] = 0;
             $promise['error'] = "Invalid Password";
             $row = $result->fetch_assoc();
             if($hashed == $row['password']){
+                // echo "hash pass=",$hashed;
+                // echo "pass pass=",$rowp';
                 $promise['status'] = 1;
+                $promise['e_id'] = $row['e_id'];
                 $promise['error'] = NULL;
             }
         }
@@ -48,20 +46,25 @@
      *  @param data an array consisting of all the staff data.
      *  @return promise promise object with attributes, status and error status = 1 success
      */
-    function registration($e_id, $password, $email, $data){
+    function registration($e_id, $password, $email, $data, $image=""){
+        // print_r($data);
          $promise = array('status' => 1, 'error' => 'Invalid Password');
          $db = new MyConnection();
          $connection = $db->getConnection();
          $hashed = hash("sha512",$password,false);
          $staff = new Staff();
          $staff->data['e_id'] = $e_id;
+         $staff->data['image'] = $image;
          if(!$staff->exists()){
             if($staff->add($data) == 1){
                // Create entry in user table
                $user = new Users();
-               $data = array('e_id' => $e_id , 'email' => $email , 'password' => $password);
-               $id = $user -> add($data);
-               echo $id;
+               $data = array();
+               $data['e_id'] = $e_id;
+               $data['password'] = $hashed;
+               $data['email'] = $email;
+               
+               $id = $user->add($data);
                $promise = array('status' => 1, 'error' => 'none');
                // return Succesful promise
                return $promise;

@@ -3,7 +3,6 @@
     if($_SESSION['loggedIn'] !=1 ){
         header("location:login.php");
     }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,13 +13,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/profile-page.css"/>
 </head>
-    <body>
+    <body class="normal">
         <svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink">
             <defs>
                 <symbol id="icon-exit_to_app" viewBox="0 0 24 24">
                     <title>exit_to_app</title>
                     <path d="M18.984 21c1.078 0 2.016-0.938 2.016-2.016v-13.969c0-1.078-0.938-2.016-2.016-2.016h-13.969c-1.125 0-2.016 0.938-2.016 2.016v3.984h2.016v-3.984h13.969v13.969h-13.969v-3.984h-2.016v3.984c0 1.078 0.891 2.016 2.016 2.016h13.969zM10.078 8.391l2.578 2.625h-9.656v1.969h9.656l-2.578 2.625 1.406 1.406 5.016-5.016-5.016-5.016z"></path>
+                </symbol>
+                <symbol id="icon-search" viewBox="0 0 24 24">
+                    <title>search</title>
+                    <path d="M9.516 14.016c2.484 0 4.5-2.016 4.5-4.5s-2.016-4.5-4.5-4.5-4.5 2.016-4.5 4.5 2.016 4.5 4.5 4.5zM15.516 14.016l4.969 4.969-1.5 1.5-4.969-4.969v-0.797l-0.281-0.281c-1.125 0.984-2.625 1.547-4.219 1.547-3.609 0-6.516-2.859-6.516-6.469s2.906-6.516 6.516-6.516 6.469 2.906 6.469 6.516c0 1.594-0.563 3.094-1.547 4.219l0.281 0.281h0.797z"></path>
                 </symbol>
                 <symbol id="icon-menu" viewBox="0 0 24 24">
                     <title>menu</title>
@@ -53,65 +56,86 @@
             </defs>
 
         </svg>
-        <header>
-            <h1>Appraise</h1>
-            <h3><?php echo $_SESSION['name'];?></h3>
-        </header>
-        <nav>
-            <?php 
-                require_once 'includes/classes/form.php';
-                function showButton(){
-                    // echo $_SESSION['e_id'];
-                    if(Form::exists($_SESSION['e_id']))
-                    {
-                        $form = new Form($_SESSION['e_id']);
-                        echo '<div class="nav-item" id="openForm" data-fid="'.$form->f_id.'"><div class="nav-circ"><svg class="icon"><use xlink:href="#icon-assignment"></use></svg></div><p>Appraisal Form</p></div>';
-                    }
-                    else {
-                        echo '<div class="nav-item" id="createForm"><div class="nav-circ-dotted"><svg class="icon"><use xlink:href="#icon-add"></use></svg></div><p>Create Form</p></div>';
-                    }
-                }
-
-                showButton();
-            
-            ?>
-           
-            <div class="nav-item">
-                <div class="nav-circ">
-                    <svg class="icon">
-                        <use xlink:href="#icon-person_pin"></use>
-                    </svg>
-                </div>
-                <p>Personal Information</p>
+        <main class="container row queue">
+            <header class="container col">
+                <h3>
+                    Department Of Computer Applications
+                </h3>
+                <div class="tab-container"> <div class="tab active-tab">In Progress <span class="number">2</span></div>
+                <div class="tab ">Completed <span class="number">1</span></div></div>
+               
+            </header>
+            <div class="search-bar" id="searchBar">
+                <svg class="search-icon">
+                    <use xlink:href="#icon-search"></use>
+                </svg>
+                <input type="text" id="searchText" placeholder="Search for Employee By Name or Employee ID">
             </div>
-            <div class="nav-item" id="logoutButton">
-                <div class="nav-circ">
-                    <svg class="icon">
-                        <use xlink:href="#icon-exit_to_app"></use>
-                    </svg>
-                </div>
-                <p>Logout</p>
+            <div class="list-view">
             </div>
-        </nav>
+        </main>
         <script>
-            let logoutButton = document.getElementById("logoutButton");
-            logoutButton.onclick = function () {
-                window.location = "logout.php";
-            }
-            let createForm = document.getElementById("createForm");
-            if(createForm !== null){
-                createForm.onclick = function () {
-                    window.location = "handler/create_form.php";
-                }
-            }
-           
-            let openForm = document.getElementById("openForm");
-            if(openForm !== null){
-                openForm.onclick = function () {
-                    window.location = "pms.php?f_id="+openForm.dataset.fid;
-                }
-            }
+          loadAll();
+          let listView = document.getElementsByClassName("list-view")[0];
+          function inflateForm(parent, form_id, hname, hdesignation, heid){
             
+              let container = document.createElement("div");
+              container.className = "list-item";
+              let header = document.createElement("header");
+              let name = document.createElement("h3");
+              let eid = document.createElement("p");
+              eid.className = "empid";
+              name.innerHTML = hname;
+              eid.innerHTML =heid;
+              let designation = document.createElement("p");
+              designation.innerHTML = hdesignation;
+              header.append(eid);
+              header.append(name);  
+              header.append(designation);
+              
+              container.append(header);
+              parent.append(container);
+          }
+          function loadAll(){
+              let xhttp = new XMLHttpRequest();
+              xhttp.onreadystatechange = function(){
+                  if(this.readyState == 4 && this.status == 200){
+                      let json = JSON.parse(this.responseText);
+                      for (let i = 0; i < json.length; i++) {
+                          const form = json[i];
+                          inflateForm(listView,0,form.name, form.designation,form.e_id);
+                          
+                          
+                      }
+                  }
+              }
+              xhttp.open("POST","handler/get_department.php",true);
+              xhttp.send();
+
+          }
+            function getImagesAndNamesAsJson(){
+                let out = [];
+                let containers = document.getElementsByClassName("tile");
+                for(let i=0; i < containers.length; i++){
+                    const profile = containers[i];
+                    let temp = {};
+                    let imgcontainer = profile.getElementsByClassName("facultylistimgwarp")[0];
+                    let namecontainer = profile.getElementsByClassName("name")[0];
+                    let emailcontainer = profile.getElementsByClassName("email")[0];
+                    let img = imgcontainer.getElementsByTagName("img")[0];
+                    let name = namecontainer.getElementsByTagName("a")[0];
+                    let email = emailcontainer.getElementsByTagName("span")[0];
+                    temp.image = img.src;
+                    temp.email = email.innerHTML;
+                    temp.name = name.innerHTML;
+                    out.push(temp);
+
+                }
+                console.log(JSON.stringify(out));
+                
+            }
+         
+                
         </script>
     </body>
 </html>
