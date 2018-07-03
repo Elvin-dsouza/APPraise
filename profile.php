@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if($_SESSION['loggedIn'] !=1 ){
+    if($_SESSION['loggedIn']!=1){
         header("location:login.php");
     }
 
@@ -25,6 +25,10 @@
                 <symbol id="icon-menu" viewBox="0 0 24 24">
                     <title>menu</title>
                     <path d="M3 6h18v2.016h-18v-2.016zM3 12.984v-1.969h18v1.969h-18zM3 18v-2.016h18v2.016h-18z"></path>
+                </symbol>
+                <symbol id="icon-appraisal_queue" viewBox="0 0 24 24">
+                    <title>appraisal_queue</title>
+                    <path d="M21.516 11.484l1.5 1.5-6.984 7.031-4.547-4.5 1.5-1.5 3.047 3zM2.016 15.984v-1.969h7.969v1.969h-7.969zM14.016 6v2.016h-12v-2.016h12zM14.016 9.984v2.016h-12v-2.016h12z"></path>
                 </symbol>
                 <symbol id="icon-settings" viewBox="0 0 24 24">
                     <title>settings</title>
@@ -54,7 +58,9 @@
 
         </svg>
         <header>
-            <h1>Appraise</h1>
+            <!-- <img src="assets/images/logo.jpg" alt=""> -->
+            <h1>MIT Appraise</h1>
+            <hr/>
             <h3><?php echo $_SESSION['name'];?></h3>
         </header>
         <nav>
@@ -65,14 +71,34 @@
                     if(Form::exists($_SESSION['e_id']))
                     {
                         $form = new Form($_SESSION['e_id']);
-                        echo '<div class="nav-item" id="openForm" data-fid="'.$form->f_id.'"><div class="nav-circ"><svg class="icon"><use xlink:href="#icon-assignment"></use></svg></div><p>Appraisal Form</p></div>';
+                        echo '<div class="nav-item" id="openForm" data-fid='.$form->f_id.' ><div class="nav-circ"><svg class="icon"><use xlink:href="#icon-assignment"></use></svg></div><p>Appraisal Form</p></div>';
                     }
                     else {
-                        echo '<div class="nav-item" id="createForm"><div class="nav-circ-dotted"><svg class="icon"><use xlink:href="#icon-add"></use></svg></div><p>Create Form</p></div>';
+                        echo '<div class="nav-item" id="createForm"><div class="nav-circ-dotted" data-eid='.$_SESSION['e_id'].'><svg class="icon"><use xlink:href="#icon-add"></use></svg></div><p>Create Form</p></div>';
                     }
                 }
 
                 showButton();
+            
+            ?>
+            <?php 
+                // require_once 'includes/classes/form.php';
+                function showQueueButton(){
+                    // echo $_SESSION['e_id'];
+                    if($_SESSION['eval_level'] > 1)
+                    {
+                        $form = new Form($_SESSION['e_id']);
+                        if($_SESSION['eval_level'] == 2){
+                            // print_r($_SESSION);
+                            echo '<div class="nav-item" id="openQueue" data-deptid='.$_SESSION['department'].'><div class="nav-circ"><svg class="icon"><use xlink:href="#icon-appraisal_queue"></use></svg></div><p>Dept Appraisal</p></div>';
+                        }
+                        else {
+                             echo '<div class="nav-item" id="openQueue" data-deptid="0"><div class="nav-circ"><svg class="icon"><use xlink:href="#icon-appraisal_queue"></use></svg></div><p>Dept Appraisal</p></div>';
+                        }
+                    }
+                }
+
+                showQueueButton();
             
             ?>
            
@@ -101,7 +127,7 @@
             let createForm = document.getElementById("createForm");
             if(createForm !== null){
                 createForm.onclick = function () {
-                    window.location = "handler/create_form.php";
+                    window.location = "handler/create_form.php?e_id="+createForm.dataset.eid;
                 }
             }
            
@@ -109,6 +135,13 @@
             if(openForm !== null){
                 openForm.onclick = function () {
                     window.location = "pms.php?f_id="+openForm.dataset.fid;
+                }
+            }
+
+            let openQueue = document.getElementById("openQueue");
+            if(openQueue !== null){
+                openQueue.onclick = function () {
+                    window.location = "appraisal_queue.php?dept_id="+openQueue.dataset.deptid;
                 }
             }
             

@@ -15,7 +15,7 @@
 				padding:20px;
 
 			}
-
+			
 			.buttonAddChild{
 				justify-content: flex-start;
 				align-items: flex-start;
@@ -175,18 +175,34 @@
 			let container = document.createElement("div");
 			container.className = "add-criteria-row";
 			container.style.order=1;
-			let iHeading = document.createElement("input");
+			let iHeading = document.createElement("textarea");
 			iHeading.className = "dHeading";
 			iHeading.placeholder="Heading";
 			let iMax = document.createElement("input");
 			iMax.className="dMax";
 			iMax.placeholder="Max Points";
-			let iDesc = document.createElement("input");
+			let iDesc = document.createElement("textarea");
 			iDesc.className="dDesc";
 			iDesc.placeholder="Criteria Description";
+			let iEval = document.createElement("select");
+			iEval.className="dEval";
+			let eval_employee = document.createElement("option");
+			eval_employee.innerHTML="Employee";
+			eval_employee.value=1;
+			let eval_hod = document.createElement("option");
+			eval_hod.innerHTML="Head Of Department";
+			eval_hod.value=2;
+			let eval_Director = document.createElement("option");
+			eval_Director.innerHTML = "Director"
+			eval_Director.value=3;
+			iDesc.placeholder="Criteria Description";
+			iEval.append(eval_employee);
+			iEval.append(eval_hod);
+			iEval.append(eval_Director);
 			container.append(iHeading);
 			container.append(iMax);
 			container.append(iDesc);
+			container.append(iEval);
 			let childContainer = document.createElement("div")
 			childContainer.className ="add-form-children container row";
 			let addButtonContainer = document.createElement("div");
@@ -216,6 +232,7 @@
 				temp.heading = parent.getElementsByClassName("dHeading")[0].value;
 				temp.max = parent.getElementsByClassName("dMax")[0].value;
 				temp.description = parent.getElementsByClassName("dDesc")[0].value;
+				temp.eval_level = parent.getElementsByClassName("dEval")[0].value;
 				temp.part = Part;
 				temp.isSubCriteria = 0;
 				let child = parent.getElementsByClassName("add-form-children")[0];
@@ -243,10 +260,10 @@
 					if(this.readyState == 4 && this.status == 200){
 						let output = JSON.parse(this.responseText);
 						if(output.status == 1){
-							alert("YAAAY");
+							alert("Criteria Created");
 						}
 						else {
-							alert("AWWWWW");
+							alert("An Unexpected Error Occoured");
 						}
 					}
 				}

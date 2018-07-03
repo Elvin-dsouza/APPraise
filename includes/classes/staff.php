@@ -40,6 +40,7 @@
                 'qualification' => 'na',
                 'designation' => '1-1-1970',
                 'age' => 0,
+                'eval_level' => 1,
                 'image' => '',
                 'pfno' => 000, 'superior_id' => 'MAHE00000');
             else // if not check if employee exists and then retrieve
@@ -61,13 +62,15 @@
          */
         function add($dataArray){
                 $this->data = $dataArray;
+               
                 // print_r($this->data);
-                $this->statementInsert->bind_param("ssissssiiss", $this->data['e_id'], $this->data['name'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'],$this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id'], $this->data['image']);
+                $this->statementInsert->bind_param("ssissssiissi", $this->data['e_id'], $this->data['name'], $this->data['dept_id'], $this->data['dob'], $this->data['doj'], $this->data['qualification'],$this->data['designation'], $this->data['age'], $this->data['pfno'], $this->data['superior_id'], $this->data['image'], $this->data['eval_level']);
+                
                 $r = $this->statementInsert->execute();
                 if($r)
                     return 1;
                 else
-                    return $this->statementInsert->errno;
+                    return $this->statementInsert->error;
         }
 
         function exists(){
@@ -96,11 +99,7 @@
             // create Prepared Statements
             $this->statementUpdate = $this->connection->prepare("UPDATE staff SET `e_id` = ?,`name` = ?,`dept_id` = ?,`dob` = ?,`doj` = ?,`qualification` = ?,`designation` = ?,`age` = ?,`pfno` = ?, `superior_id` = ? WHERE e_id = ?");
 
-            $this->statementInsert = $this->connection->prepare("INSERT INTO staff (
-                `e_id`, `name`,
-                `dept_id`, `dob`, `doj`,
-                `qualification`, `designation`,
-                `age`,`pfno`, `superior_id`, `image`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+            $this->statementInsert = $this->connection->prepare("INSERT INTO staff (`e_id`, `name`, `dept_id`, `dob`, `doj`,`qualification`, `designation`, `age`, `pfno`, `superior_id`, `image`, `eval_level`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             // one function to find them
             $this->statementRetrieve = $this->connection->prepare("SELECT * FROM staff
                 WHERE e_id = ?");

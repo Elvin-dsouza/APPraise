@@ -52,14 +52,16 @@
         private $table_staff = "CREATE TABLE IF NOT EXISTS `staff`(`e_id` VARCHAR(15) PRIMARY KEY,
             `name` VARCHAR(128),
             `dept_id` INT(3),
+            `eval_level` INT(3),
             `dob` DATE,
             `doj` DATE,
             `qualification` VARCHAR(24),
             `designation` VARCHAR(80),
             `age` SMALLINT(3),
             `pfno` INT(15),
+            `image` VARCHAR(256),
             `superior_id` VARCHAR(15),
-
+            FOREIGN KEY (eval_level) REFERENCES eval(eval_level),
             FOREIGN KEY (superior_id) REFERENCES staff(e_id),
             FOREIGN KEY (dept_id) REFERENCES department(dept_id) ON DELETE CASCADE)";
 
@@ -122,8 +124,8 @@
             $this->con->query($this->table_departments);
             $this->con->query($this->table_staff);
             $this->con->query($this->table_users);
-            $this->con->query($this->table_critera);
             $this->con->query($this->table_eval);
+            $this->con->query($this->table_critera);
             $this->con->query($this->table_forms);
             $this->con->query($this->table_score);
             $this->con->query($this->table_cumulative);
