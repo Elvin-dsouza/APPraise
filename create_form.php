@@ -15,7 +15,7 @@
 				padding:20px;
 
 			}
-			
+
 			.buttonAddChild{
 				justify-content: flex-start;
 				align-items: flex-start;
@@ -159,7 +159,7 @@
 			activeTab($obj);
 			Part = $p;
 		}
-		
+
 		function activeTab($obj){
 				let partSelector = document.getElementById("partSelector");
 				let tabs = partSelector.getElementsByClassName("tab");

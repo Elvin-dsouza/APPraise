@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-    
+
     <div style="position:relative; width:100vw; height:100vh; overflow:hidden;">
         <div class="slider" >
             <div style="width:100vw; height:100vh; flex:none;" class="container row center-both" >
@@ -49,7 +49,7 @@
                                 <label>Employee ID</label>
                                 <input type="text" name="employeeid" placeholder="MAHEXXXX" id="formEid"  required>
                             </span>
-                           
+
                         </span>
                         <span class="container col" style="margin-top:10px; justify-content:space-between;">
                             <span class="container row">
@@ -78,10 +78,10 @@
                                 <label>Age</label>
                                 <input type="number" name="age" placeholder="Age" style="width:50%;" id="formAge" required>
                             </span>
-                            
+
                         </span>
                         <span class="container col" style="margin-top:10px; justify-content:space-between;">
-                            
+
                         </span>
                         <span class="container login-form col center-both">
                         <button class="button" id="sendRegistration">Register</button>
@@ -97,9 +97,9 @@
                 <h2></h2>
                 <p> We found Some of your details, please confirm this is you </p>
                 <img src="" alt="">
-                
+
                 <span class="container col" style="justify-content:space-between">
-                   
+
                     <button class="button" style="color:red" onclick="stepTwoWithOutInfo()">No, This is not me</button>
                     <button class="button" onclick="stepTwoWithInfo()">Yes, This is me</button>
                 </span>
@@ -161,11 +161,11 @@
                             retName = profile.name;
                             showDisplayModal(retImage, retName);
                             found = true;
-                        }     
+                        }
                     }
                     if(!found){
                         stepTwoWithOutInfo();
-                    }  
+                    }
                 }
             }
 
