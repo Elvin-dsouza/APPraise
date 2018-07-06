@@ -4,7 +4,7 @@
 
 
 //     include 'includes/classes/form.php';
-//     require_once 'includes/classes/db.php';
+require_once 'includes/classes/db.php';
 //     require_once 'includes/classes/criteria.php';
    
 //     // $staff = new Staff();
@@ -16,13 +16,8 @@
 // //    print_r($criteria->data);
 //    echo json_encode($array);
     
-
+$db = new MyConnection();
+$connection = $db->getConnection();
+ print_r($connection->error_list);
 ?>
 
-<!DOCTYPE html>
-<html>
-<body>
-   
-    <!-- <img src="https://sis.manipal.edu/image.aspx?FileName=P170970008.jpg"> -->
-</body>
-</html>

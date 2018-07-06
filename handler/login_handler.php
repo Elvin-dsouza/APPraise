@@ -8,6 +8,7 @@
         $_SESSION['loggedIn'] = 1;
         $_SESSION['name'] = $staff->data['name'];
         $_SESSION['e_id'] =$_POST['e_id'];
+        $_SESSION['eval_level'] =  $staff->data['eval_level'];
         $_SESSION['department'] = $staff->data['dept_id'];
     }
     echo json_encode($promise);

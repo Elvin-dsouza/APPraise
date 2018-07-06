@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     require_once '../includes/classes/db.php';
     require_once '../includes/classes/form.php';
 

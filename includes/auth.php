@@ -55,22 +55,23 @@
          $staff = new Staff();
          $staff->data['e_id'] = $e_id;
          $staff->data['image'] = $image;
+         $staff->data['eval_level'] = 1;
          if(!$staff->exists()){
-            if($staff->add($data) == 1){
+            $err = $staff->add($data);
+            if($err == 1){
                // Create entry in user table
                $user = new Users();
                $data = array();
                $data['e_id'] = $e_id;
                $data['password'] = $hashed;
                $data['email'] = $email;
-               
                $id = $user->add($data);
                $promise = array('status' => 1, 'error' => 'none');
                // return Succesful promise
                return $promise;
             }
             else {
-                $promise = array('status' => -2, 'error' => 'Error While updating staff information');
+                $promise = array('status' => -2, 'error' => $err);
                 return $promise;
             }
             return $promise;
@@ -79,5 +80,6 @@
              $promise = array('status' => -1, 'error' => 'User Already Exists');
              return $promise;
          }
+        
     }
 ?>

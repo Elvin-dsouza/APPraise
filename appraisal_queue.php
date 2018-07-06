@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Appraisal Profile</title>
+    <title>Appraisal Queue</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/profile-page.css"/>
 </head>
@@ -58,6 +58,9 @@
         </svg>
         <main class="container row queue">
             <header class="container col">
+                <!-- <svg class="icon">
+                    <use xlink:href="#icon-assignment"></use>
+                </svg> -->
                 <h3>
                     Department Of Computer Applications
                 </h3>
@@ -69,14 +72,14 @@
                 <svg class="search-icon">
                     <use xlink:href="#icon-search"></use>
                 </svg>
-                <input type="text" id="searchText" placeholder="Search for Employee By Name or Employee ID">
+                <input type="text" id="searchText" style="color:white;" placeholder="Type to Search for Employee By Name/Employee ID/Designation ">
             </div>
             <div class="list-view">
             </div>
         </main>
         <script>
-          loadAll();
           let listView = document.getElementsByClassName("list-view")[0];
+          loadAll(1);
           function inflateForm(parent, form_id, hname, hdesignation, heid){
             
               let container = document.createElement("div");
@@ -92,11 +95,16 @@
               header.append(eid);
               header.append(name);  
               header.append(designation);
-              
               container.append(header);
               parent.append(container);
           }
-          function loadAll(){
+
+          let searchBar = document.getElementById("searchText");
+          searchBar.onkeyup = function(){
+              loadFromSearch(1,searchBar.value);
+          }
+          function loadAll(dept_id){
+              listView.innerHTML = "";
               let xhttp = new XMLHttpRequest();
               xhttp.onreadystatechange = function(){
                   if(this.readyState == 4 && this.status == 200){
@@ -104,15 +112,32 @@
                       for (let i = 0; i < json.length; i++) {
                           const form = json[i];
                           inflateForm(listView,0,form.name, form.designation,form.e_id);
-                          
-                          
                       }
                   }
               }
               xhttp.open("POST","handler/get_department.php",true);
-              xhttp.send();
-
+              xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("dept_id="+ dept_id);
           }
+
+          function loadFromSearch(dept_id,skey) {
+                // listView.innerHTML = "";
+                listView.innerHTML = "";
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let json = JSON.parse(this.responseText);
+                        for (let i = 0; i < json.length; i++) {
+                            const form = json[i];
+                            inflateForm(listView, 0, form.name, form.designation, form.e_id);
+                        }
+                    }
+                }
+                xhttp.open("POST", "handler/queue_search.php", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("search_key="+skey+"&dept_id="+dept_id);
+            }
+
             function getImagesAndNamesAsJson(){
                 let out = [];
                 let containers = document.getElementsByClassName("tile");

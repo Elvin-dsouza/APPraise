@@ -143,12 +143,13 @@
             console.log(JSON.stringify(sendObject));
             xhttp.open("POST","handler/registration_handler.php",true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("json="+ JSON.stringify(sendObject)+"&e_id="+ sendObject.e_id+"&password="+ sendObject.password+ "&email="+sendObject.email);
+            xhttp.send("json="+ JSON.stringify(sendObject)+"&e_id="+ sendObject.e_id+"&password="+ sendObject.password+ "&email="+sendObject.email +"&image="+retImage);
         }
 
 		function nextStep(){
            let slider =  document.getElementsByClassName("slider")[0];
            let xhttp = new XMLHttpRequest();
+           let found = false;
            xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     let json = JSON.parse(this.responseText);
@@ -159,10 +160,15 @@
                             retImage = profile.image;
                             retName = profile.name;
                             showDisplayModal(retImage, retName);
+                            found = true;
                         }     
+                    }
+                    if(!found){
+                        stepTwoWithOutInfo();
                     }  
                 }
             }
+
            xhttp.open("GET", "includes/mit_staff.json", true);
            xhttp.send();
         }

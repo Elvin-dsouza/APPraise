@@ -75,12 +75,12 @@ class Stack
             }
             else
             {
-                echo $stmt->error;
+                // echo $stmt->error;
                 return 0;
             }
-            print_r($childStack->stack);
+            // print_r($childStack->stack);
             $s=count($data->children);
-            echo $s;
+            // echo $s;
             // echo $childStack->stack;
             add($data,$childStack);
         }
@@ -111,8 +111,8 @@ class Stack
                     echo $stmt->error;
                     return 0;
                 }
-                print_r($childStack->stack);
-                echo $d->heading;
+                // print_r($childStack->stack);
+                // echo $d->heading;
                 add($d,$childStack);
                         
             }
