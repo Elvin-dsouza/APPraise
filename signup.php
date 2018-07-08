@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,12 @@
             padding:10px;
             font-size:1em;
         }
+				input.invalid {
+        border-color: #DD2C00;
+}
     </style>
 </head>
 <body>
-
     <div style="position:relative; width:100vw; height:100vh; overflow:hidden;">
         <div class="slider" >
             <div style="width:100vw; height:100vh; flex:none;" class="container row center-both" >
@@ -33,7 +36,7 @@
             <div style="width:100vw; height:100vh; flex:none;" class="container col center-both">
                 <div class="login-form container padding-20 row" style="max-width:50vw;">
                     <h1> <span class="tab" > 2</span> Employee Information</h1>
-                        <span class="container row c9" style="margin-top:10px;">
+										<span class="container row c9" style="margin-top:10px;">
                             <label>Employee Name</label>
                             <input type="text" name="name" placeholder="Title.Firstname Lastname" id="formName" required>
                         </span>
@@ -84,7 +87,7 @@
 
                         </span>
                         <span class="container login-form col center-both">
-                        <button class="button" id="sendRegistration">Register</button>
+                        <button class="button" id="sendRegistration" onclick="return validate()">Register</button>
                         <button onclick="window.location='signup'" class="button-inverse">Already Registered? Login in</button>
                     </span>
                 </div>
@@ -112,10 +115,65 @@
         let retName = "";
         let registrationForm = document.getElementById("sendRegistration");
         registrationForm.onclick = function(){
+					let name=document.getElementById("formName").value;
+					let eid = document.getElementById("formEid").value;
+					let dob = document.getElementById("formDOB").value;
+					let doj = document.getElementById("formDOJ").value;
+					let pos = document.getElementById("formPOS").value;
+					let today = new Date();
+					let dobResult = new Date(dob);
+					let dojResult = new Date(doj);
+					let posResult = new Date(pos);
+					let designation = document.getElementById('formDesignation').value;
+					let qualification = document.getElementById("formQualification").value;
+					let age = document.getElementById("formAge").value;
+					let nameRGEX = /^[A-Za-z\s]{1,}[\.\']{0,1}[A-Za-z\s]{0,}$/;// /^[a-zA-Z ./']*$/;
+					let formEidRGEX = /^MAHE.[0-9]{4}$/;
+					let designationRGEX = /^[a-zA-Z ]*$/;
+					let qualificationRGEX = /^[a-zA-Z ]*$/;
+					let nameResult = nameRGEX.test(name);
+					let formEidResult = formEidRGEX.test(formEid);
+					let designationResult = designationRGEX.test(designation);
+					let qualificationResult = qualificationRGEX.test(qualification);
+					let ageResult = today.getFullYear()-dobResult.getFullYear();
+					if(nameResult == false)
+					{
+						alert("Please enter name that can contain only alphabets . and '");
+						//document.form.name.focus();
+						return false;
+					}
+					// else if (formEidResult == false) {
+					// 	alert("Please enter valid employee id e.g MAHEXXXX");
+					// 	return false;
+					// }
+					else if (dobResult > today) {
+						alert("Date of birth entered is not valid!!");
+						return false;
+					}
+					else if(dobResult > dojResult){
+						alert("Date of joining entered is not valid!!");
+						return false;
+					}
+					else if(dojResult > posResult){
+						alert("Date of position entered is not valid!!");
+						return false;
+					}
+					else if(designationResult == false){
+						alert("Designation entered can only be alphabets");
+						return false;
+					}
+					else if(qualificationResult == false){
+						alert("qualification entered can only be alphabets");
+						return false;
+					}
+					else if (age!=ageResult) {
+						alert("Age entered is invalid!!");
+						return false;
+					}
             sendObject.e_id = document.getElementById("formEid").value;
             sendObject.password = document.getElementById("formPass").value;
             sendObject.email = document.getElementById("formEmail").value;
-            let staff = {}
+            let staff = {};
             staff.e_id = document.getElementById("formEid").value;
             staff.name = document.getElementById("formName").value;
             staff.dept_id = document.getElementById("formDepartment").value;
@@ -143,7 +201,7 @@
             console.log(JSON.stringify(sendObject));
             xhttp.open("POST","handler/registration_handler.php",true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("json="+ JSON.stringify(sendObject)+"&e_id="+ sendObject.e_id+"&password="+ sendObject.password+ "&email="+sendObject.email +"&image="+retImage);
+            xhttp.send("json="+ JSON.stringify(sendObject)+"&e_id="+ sendObject.e_id+"&password="+ sendObject.password+ "&email="+sendObject.email+"&image="+retImage);
         }
 
 		function nextStep(){
@@ -197,6 +255,7 @@
             let head = profileConfirm.getElementsByTagName("h2")[0];
             head.innerHTML = heading;
         }
+
 	</script>
 </body>
 </html>
