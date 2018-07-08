@@ -459,7 +459,7 @@ header .icon{
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
-	
+
 }
 .save-indicator{
 	display:flex;
@@ -472,7 +472,7 @@ header .icon{
 }
 
 .save-indicator > .save-status{
-	
+
 	color:gray;
 	font-style: italic;
 	padding:5px;
@@ -484,14 +484,13 @@ header .icon{
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	background:white;
 	margin:10px;
-	color:darkgrey;
+	color:#3F51B5;
 	border-radius: 50px;
 	padding:10px 20px;
 	cursor: pointer;
 }
 
 .active-tab{
-	/* border:1px solid #E91E63; */
 	color:#3F51B5;
 	font-weight:500;
 
@@ -560,7 +559,7 @@ span.profile-name
 	color:#333;
 	margin-right:10px;
 	margin-top:5px;
-	padding:0px 30px;
+	padding:0px 20px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -571,7 +570,7 @@ span.profile-name
 	/* margin-bottom:10px; */
 	padding-left:20px;
 	border-radius:5px;
-	
+
 }
 
 .appraisal-criteria  p{
@@ -579,31 +578,23 @@ span.profile-name
 
 }
 .app-child-container{
-	
 	display:none;
 	flex-flow:column;
 	/* flex:1; */
-	margin-top:0px;
+
 	padding:0px 0px;
-	/* border-left: 1px solid #333; */
+	border-left: 1px solid #333;
 	/* align-self: flex-start; */
-	
+
 
 }
 
 
 .app-child-container > .appraisal-criteria{
 	box-shadow: 0px 0px 0px transparent;
-	/* background:lightgrey; */
 	border:0;
-	border-bottom:1px solid lightgray;
-	border-radius:0;
-	min-height: auto;
-	/* padding-right:10px; */
-	/* border:1px solid black; */
-	display: flex;
 	padding-right:0px;
-	/* margin-top:0px; */
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-right:0px;
@@ -614,20 +605,19 @@ span.profile-name
 
 }
 .app-child-container > .appraisal-criteria >header {
-	
+
 	margin: 0px 20px;
 }
 
 .app-child-container>.appraisal-criteria>header > h2 {
-	font-size: 1em;
-	font-weight:400px;
+	font-size: 1.2em;
 }
 .appraisal-criteria>header.space-even {
-	
+
 	margin: 0px 20px;
 }
 .appraisal-criteria > header{
-	
+
 	margin-right: 50px;
 }
 
@@ -656,13 +646,13 @@ span.profile-name
 }
 
 .appraisal-heading > h1{
-	
+
 	font-weight:400;
 }
 .appraisal-criteria > header > h2{
 	color:#333;
-	/* font-weight: 400; */
-	
+	font-weight: 400;
+
 	margin:0px;
 }
 
@@ -694,4 +684,55 @@ span.profile-name
 	padding:15px;
 	color:white;
 	font-size:1.5em;
+}
+
+/* css for comment.php */
+
+.main_container{
+	width: 90%;
+	height:auto ;
+	position: absolute;
+	top: 20%;
+	left: 2%;
+}
+.appraiser_container{
+	align-items: center;
+	width: auto;
+	height: 250px;
+	/* display: inline-block; */
+}
+.appraisee_container{
+	align-content: center;
+	width: auto;
+	height: auto;
+	/* display: inline-block; */
+}
+.appraiserhead{
+	font-size:2em;
+}
+.appraiseehead{
+	font-size:2em;
+}
+#appraisertext{
+	/*font-size: */
+}
+#appraiseetext{
+	/*width: 100%;*/
+}
+#nextyear_container{
+	align-content: center;
+	width: 100%;
+	height: auto;
+}
+#nextyear_head
+{
+	font-size:2em;
+}
+/*#save{
+	font-size: 2em;
+	border-radius: 10%;
+	padding: 10px;
+}*/
+textarea{
+	font-size: 2em;
 }
